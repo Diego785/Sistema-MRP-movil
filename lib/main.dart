@@ -1,29 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sistema_mrp/Views/login.dart';
+
+import 'package:sistema_mrp/Controllers/Login/auth.dart';
+import 'package:sistema_mrp/Views/welcome.dart';
 
 void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'SISTEMA MRP',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("SYSTEM MRP"),
-        ),
-        backgroundColor: Colors.white,
-        body: const Center(
-          child: Text('MAIN PAGE SYSTEM MRP'),
-        ),
-      ),
-    );
-  }
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => Auth()),
+      ],
+      child: MyApp(),
+    ),
+  );
 }
