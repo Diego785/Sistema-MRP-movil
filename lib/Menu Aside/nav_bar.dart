@@ -56,10 +56,12 @@ class NavBar extends StatelessWidget {
               title: Text("Inicio"),
               onTap: () {},
             ),
-            Divider(),ListTile(
-              leading: Icon(Icons.sell),
-              title: Text("Compra y Distribución"),
-              onTap: () {},
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.work),
+              title: Text("Materia Prima"),
+              onTap: () => _materia_prima(context)
+              ,
             ),
             Divider(),
           /*  ListTile(
@@ -96,3 +98,8 @@ class NavBar extends StatelessWidget {
     }));
   }
 }
+
+void _materia_prima(BuildContext context) {
+  Navigator.of(context).pushNamed("/materia-prima");
+}
+

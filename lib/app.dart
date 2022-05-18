@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sistema_mrp/Controllers/Login/auth.dart';
+import 'package:sistema_mrp/Models/materia_prima.dart';
 import 'package:sistema_mrp/Views/Login.dart';
+import 'package:sistema_mrp/Views/show_materia_prima.dart';
 import 'package:sistema_mrp/Views/welcome.dart';
 
 class MyApp extends StatelessWidget {
@@ -40,6 +42,8 @@ class MyApp extends StatelessWidget {
               return LoginPage();
             case '/home':
               return WelcomePage();
+              case '/materia-prima':
+              return ShowMateriaPrima();
           }
           return Text("Null");
         });
