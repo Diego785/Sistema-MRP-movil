@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sistema_mrp/Controllers/Login/auth.dart';
-import 'package:sistema_mrp/Models/materia_prima.dart';
-import 'package:sistema_mrp/Views/Login.dart';
-import 'package:sistema_mrp/Views/show_materia_prima.dart';
-import 'package:sistema_mrp/Views/welcome.dart';
+import 'Views/views.dart';
 
 class MyApp extends StatelessWidget {
   //const MyApp({Key? key}) : super(key: key);
@@ -42,8 +39,10 @@ class MyApp extends StatelessWidget {
               return LoginPage();
             case '/home':
               return WelcomePage();
-              case '/materia-prima':
+            case '/materia-prima':
               return ShowMateriaPrima();
+            case '/producto':
+              return ProductoScreen();
           }
           return Text("Null");
         });

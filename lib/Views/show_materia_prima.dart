@@ -21,7 +21,7 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
 
   Future<List<MateriaPrima>> _getMaterias() async {
     Uri url =
-        Uri.parse('http://192.168.100.4/Sistema-MRP/public/api/materia-prima-api');
+        Uri.parse('http://192.168.100.4/Sistema-MRP/public/api/materia-prima-api'); 
     final response = await http.get(url);
     List<MateriaPrima> data = [];
     if (response.statusCode == 200) {

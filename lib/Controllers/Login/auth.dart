@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sistema_mrp/Models/user.dart';
 import 'package:sistema_mrp/controllers/login/dio.dart';
+import 'package:http/http.dart' as http;
 
 class Auth extends ChangeNotifier {
   bool _isLoggedIn = false;
@@ -15,17 +16,17 @@ class Auth extends ChangeNotifier {
   User get user => _user;
 
   void login(Map credentials) async {
-    print(credentials);
+    print("datos recibidos:  Views.login => " + credentials.toString());
 
     try {
       Dio.Response response =
           await dio().post('/sanctum/token', data: credentials);
-      print(response.data.toString());
+      print("RESPUESTA POST: Views.login => " + response.data.toString());
 
       String token = response.data.toString();
-      this.tryToken(token);
+      tryToken(token);
     } catch (e) {
-      print(e);
+      print('void login: ' + e.toString());
     }
   }
 
