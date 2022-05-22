@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:sistema_mrp/Models/materia_prima.dart';
+import 'package:sistema_mrp/Models/Inventario/MateriaPrima.dart';
 import 'package:sistema_mrp/Menu Aside/nav_bar.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-
 
 class ShowMateriaPrima extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
 
   Future<List<MateriaPrima>> _getMaterias() async {
     Uri url =
-        Uri.parse('http://192.168.100.4/Sistema-MRP/public/api/materia-prima-api'); 
+        Uri.parse('http://sistema-mrp.herokuapp.com/api/materia-prima-api');
     final response = await http.get(url);
     List<MateriaPrima> data = [];
     if (response.statusCode == 200) {
@@ -30,8 +31,15 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
       for (var item in jsonData) {
         print(item["id"]);
         print(item["nombre"]);
-        data.add(MateriaPrima(item["id"], item["nombre"], item["tipo"],
-            item["descripcion"], item["tamaño"], item["peso"], item["color"], item["idCategoriaMP"]));
+        data.add(MateriaPrima(
+            item["id"],
+            item["nombre"],
+            item["tipo"],
+            item["descripcion"],
+            item["tamaño"],
+            item["peso"],
+            item["color"],
+            item["idCategoriaMP"]));
       }
       return data;
     } else {
@@ -53,22 +61,7 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
         title: Text("Materia Prima Crud"),
         backgroundColor: Colors.green.shade800,
       ),
-      body: FutureBuilder(
-        future: _listMateriaPrima,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return  ListView(
-                children: _list(context, snapshot.data),
-              );
-            
-          } else if (snapshot.hasError) {
-            return Text("Error");
-          }
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      ),
+      body: getBody(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.green.shade700,
         onPressed: () {
@@ -84,11 +77,70 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
             }
           });*/
         },
-        
         tooltip: "Agregar Materia Prima",
         child: Icon(Icons.add),
       ),
     );
+  }
+
+  Widget getBody() {
+    return FutureBuilder(
+      future: _listMateriaPrima,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ListView(
+            //children: _list(context, snapshot.data),
+            children: cardItem(context, snapshot.data),
+          
+          );
+        } else if (snapshot.hasError) {
+          return Text("Error");
+        }
+        return Center(
+          child: LoadingPage(),
+        );
+      },
+    );
+  }
+
+  List<Widget> cardItem(context, data) {
+    List<Widget> materias = [];
+    for (var materia in data) {
+      materias.add(
+        Card(
+          child: Slidable(
+            actionPane: SlidableDrawerActionPane(),
+            actionExtentRatio: 0.25,
+            child: Container(
+              color: Colors.white,
+              child: ListTile(
+                title: Text(materia.nombre),
+                subtitle: Text(materia.descripcion),
+                leading: CircleAvatar(
+                  backgroundColor: Colors.green.shade900,
+                  child: Text(materia.id.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
+                ),
+              ),
+            ),
+            secondaryActions: <Widget>[
+              IconSlideAction(
+                caption: 'Editar',
+                color: Colors.indigoAccent,
+                icon: Icons.edit,
+                onTap: (){},
+              ),
+            IconSlideAction(
+                caption: 'Delete',
+                color: Colors.red,
+                icon: Icons.delete,
+                onTap: (){},
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    return materias;
   }
 
   Future<void> _refresh() {
@@ -102,22 +154,6 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
     for (var materia in data) {
       materias.add(
         ListTile(
-          onTap: () {
-            /*Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => EditBus(bus)))
-                .then((newBus) {
-              if (newBus != null) {
-                setState(() {
-                  messageResponse(
-                      context, newBus.codigo.toString() + " has been updated!");
-                });
-              }
-            });*/
-          },
-          onLongPress: () => setState(() {
-            // Here will be the deleted method
-            /*this._deleteMateria(context, materia);*/
-          }),
           title: Text(materia.nombre),
           subtitle: Text(materia.descripcion),
           leading: CircleAvatar(
@@ -131,7 +167,7 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
   }
 
 //--------------------------------- DELETE USERS ---------------------------------//
- /* _deleteMateria(context, MateriaPrima materia) {
+  /* _deleteMateria(context, MateriaPrima materia) {
     showDialog(
         context: context,
         builder: (dialogContext) => AlertDialog(
@@ -179,4 +215,21 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
       throw Exception("Error");
     }
   }*/
+}
+
+class LoadingPage extends StatelessWidget {
+  const LoadingPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.green.shade700,
+      body: Center(
+        child: SpinKitCircle(
+          size: 140,
+          color: Colors.white,
+        ),
+      ),
+    );
+  }
 }

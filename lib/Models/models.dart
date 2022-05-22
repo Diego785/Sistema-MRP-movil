@@ -1,3 +1,3 @@
 export 'package:sistema_mrp/Models/Inventario/Producto.dart';
-export 'materia_prima.dart';
+export 'Inventario/MateriaPrima.dart';
 export 'user.dart';
