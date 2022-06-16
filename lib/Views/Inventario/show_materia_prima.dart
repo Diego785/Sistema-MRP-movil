@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
 import 'package:sistema_mrp/Models/Inventario/MateriaPrima.dart';
 import 'package:sistema_mrp/Menu Aside/nav_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -56,7 +57,6 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
       appBar: AppBar(
         title: Text("Materia Prima Crud"),
         backgroundColor: Colors.green.shade800,
@@ -112,16 +112,24 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
             actionPane: SlidableDrawerActionPane(),
             actionExtentRatio: 0.25,
             child: Container(
-              color: Colors.white,
+              color: Colors.blueGrey.shade50,
               child: ListTile(
-                title: Text(materia.nombre),
-                subtitle: Text(materia.descripcion),
+                title: Text(materia.nombre, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                subtitle: Text(materia.descripcion, style: TextStyle( color: secondaryColor, fontStyle: FontStyle.italic),),
                 leading: CircleAvatar(
                   backgroundColor: Colors.green.shade900,
                   child: Text(materia.id.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
                 ),
               ),
             ),
+            actions: <Widget>[
+              IconSlideAction(
+                caption: 'Eliminar',
+                color: Colors.red,
+                icon: Icons.delete,
+                onTap: (){},
+              ),
+            ],
             secondaryActions: <Widget>[
               IconSlideAction(
                 caption: 'Editar',
@@ -129,10 +137,10 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
                 icon: Icons.edit,
                 onTap: (){},
               ),
-            IconSlideAction(
-                caption: 'Delete',
-                color: Colors.red,
-                icon: Icons.delete,
+              IconSlideAction(
+                caption: 'Visualizar',
+                color: Colors.orange,
+                icon: Icons.visibility,
                 onTap: (){},
               ),
             ],

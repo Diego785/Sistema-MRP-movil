@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                               if (_formKey.currentState!.validate()) {
                                 Provider.of<Auth>(context, listen: false)
                                     .login(credentials);
-                                Navigator.pushNamed(context, "/home");
+                                Navigator.pushNamed(context, "/main-screen");
                               }
                             },
                           ),
@@ -165,9 +165,7 @@ class _LoginPageState extends State<LoginPage> {
                               FlatButton(
                                 textColor: Theme.of(context).primaryColor,
                                 child: Text("Registrarse"),
-                                onPressed: () {
-                                  _showRegister(context);
-                                },
+                                onPressed: () => Navigator.pushNamed(context, "/main-screen"),
                               ),
                             ],
                           ),

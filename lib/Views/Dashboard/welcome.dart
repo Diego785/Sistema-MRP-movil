@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:sistema_mrp/Menu%20Aside/nav_bar.dart';
 import 'package:sistema_mrp/Controllers/Login/auth.dart';
-import 'package:sistema_mrp/Views/Login.dart';
+import 'package:sistema_mrp/Views/Login/login.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);

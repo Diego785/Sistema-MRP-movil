@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sistema_mrp/Views/Login.dart';
-import 'package:sistema_mrp/Views/login.dart';
-import 'package:sistema_mrp/Views/welcome.dart';
+import 'package:sistema_mrp/Views/Login/login.dart';
+import 'package:sistema_mrp/Views/Dashboard/welcome.dart';
 import 'package:sistema_mrp/Controllers/Login/auth.dart';
 
 class NavBar extends StatelessWidget {
@@ -18,8 +17,8 @@ class NavBar extends StatelessWidget {
               leading: Icon(Icons.login),
               title: Text("Login"),
               onTap: () {
-                /*Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => LoginPage()));*/
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => LoginPage()));
               },
             ),
           ],
@@ -95,7 +94,7 @@ class NavBar extends StatelessWidget {
               onTap: () {
                 Provider.of<Auth>(context, listen: false).logout();
                 Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => WelcomePage()));
+                    context, MaterialPageRoute(builder: (_) => LoginPage()));
               },
             ),
           ],
