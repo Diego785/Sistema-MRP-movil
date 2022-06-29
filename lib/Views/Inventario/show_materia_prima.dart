@@ -58,28 +58,10 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Materia Prima Crud"),
+        title: Text("Materia Prima"),
         backgroundColor: Colors.green.shade800,
       ),
       body: getBody(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green.shade700,
-        onPressed: () {
-          /*Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => RegisterBus()))
-              .then((newBus) {
-            if (newBus != null) {
-              setState(() {
-                buses.add(newBus);
-                messageResponse(
-                    context, newBus.codigo.toString() + " has been saved!");
-              });
-            }
-          });*/
-        },
-        tooltip: "Agregar Materia Prima",
-        child: Icon(Icons.add),
-      ),
     );
   }
 
@@ -122,28 +104,6 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
                 ),
               ),
             ),
-            actions: <Widget>[
-              IconSlideAction(
-                caption: 'Eliminar',
-                color: Colors.red,
-                icon: Icons.delete,
-                onTap: (){},
-              ),
-            ],
-            secondaryActions: <Widget>[
-              IconSlideAction(
-                caption: 'Editar',
-                color: Colors.indigoAccent,
-                icon: Icons.edit,
-                onTap: (){},
-              ),
-              IconSlideAction(
-                caption: 'Visualizar',
-                color: Colors.orange,
-                icon: Icons.visibility,
-                onTap: (){},
-              ),
-            ],
           ),
         ),
       );

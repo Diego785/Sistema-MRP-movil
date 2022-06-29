@@ -95,6 +95,13 @@ class SideMenu extends StatelessWidget {
               onTap: () => Navigator.pushNamed(context, "/producto"),
             ),
             const Divider(),
+
+             ListTile(
+            leading: Icon(Icons.upcoming),
+              title: const Text("Pedidos"),
+              onTap: () => Navigator.pushNamed(context, "/pedido"),
+            ),
+            const Divider(),
             /*  ListTile(
               leading: Icon(Icons.share),
               title: Text("Share"),
@@ -211,5 +218,8 @@ class DrawerListTile extends StatelessWidget {
 }
 
 void _materia_prima(BuildContext context) {
+  Navigator.of(context).pushNamed("/materia-prima");
+}
+void _pedido(BuildContext context) {
   Navigator.of(context).pushNamed("/materia-prima");
 }
