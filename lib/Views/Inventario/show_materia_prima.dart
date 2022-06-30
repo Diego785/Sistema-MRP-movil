@@ -117,7 +117,7 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
                 title: Text(materia.nombre),
                 subtitle: Text(materia.descripcion),
                 leading: CircleAvatar(
-                  backgroundColor: Colors.green.shade900,
+                  backgroundColor: Color.fromARGB(255, 36, 53, 37),
                   child: Text(materia.id.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
                 ),
               ),

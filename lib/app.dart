@@ -12,6 +12,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'SISTEMA MRP',
       initialRoute: '/',
+      routes: {
+        'productoShow': (_) => ProductoShowScreen(),
+        '/producto': (_) => ProductoScreen(),
+      },
       theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.green[800],
@@ -41,10 +45,10 @@ class MyApp extends StatelessWidget {
               return WelcomePage();
             case '/materia-prima':
               return ShowMateriaPrima();
-            case '/producto':
-              return ProductoScreen();
+            
+            
           }
-          return Text("Null");
+          return Text("xd");
         });
       },
     );
