@@ -6,6 +6,7 @@ import 'dart:convert';
 import 'package:sistema_mrp/Models/models.dart';
 import 'dart:convert' as convert;
 
+// ignore: use_key_in_widget_constructors
 class ProductoScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _ProductoScreenState();
@@ -68,7 +69,7 @@ class _ProductoScreenState extends State<ProductoScreen> {
         // listaDeWidget.add(const Divider());
         Card widgetTemp = Card(
           child: Slidable(
-            actionPane: SlidableDrawerActionPane(),
+            actionPane: const SlidableDrawerActionPane(),
             actionExtentRatio: 0.25,
             child: Container(
               color: Colors.white,
@@ -76,9 +77,9 @@ class _ProductoScreenState extends State<ProductoScreen> {
                 title: Text(product.nombre.toString()),
                 subtitle: Text(product.descripcion.toString()),
                 leading: CircleAvatar(
-                  backgroundColor: Color.fromARGB(255, 36, 53, 37),
+                  backgroundColor: const Color.fromARGB(255, 36, 53, 37),
                   child: Text(product.id.toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
                           fontStyle: FontStyle.italic)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
 import 'package:sistema_mrp/Models/Inventario/MateriaPrima.dart';
 import 'package:sistema_mrp/Menu Aside/nav_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -22,7 +23,10 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
 
   Future<List<MateriaPrima>> _getMaterias() async {
     Uri url =
-        Uri.parse('http://sistema-mrp.herokuapp.com/api/materia-prima-api');
+        // Uri.parse('http://sistema-mrp.herokuapp.com/api/materia-prima-api');
+        Uri.parse('http://192.168.1.2/Sistema-MRP/public/api/materia-prima-api');
+        
+        
     final response = await http.get(url);
     List<MateriaPrima> data = [];
     if (response.statusCode == 200) {
@@ -56,30 +60,11 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavBar(),
       appBar: AppBar(
-        title: Text("Materia Prima Crud"),
+        title: Text("Materia Prima"),
         backgroundColor: Colors.green.shade800,
       ),
       body: getBody(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green.shade700,
-        onPressed: () {
-          /*Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => RegisterBus()))
-              .then((newBus) {
-            if (newBus != null) {
-              setState(() {
-                buses.add(newBus);
-                messageResponse(
-                    context, newBus.codigo.toString() + " has been saved!");
-              });
-            }
-          });*/
-        },
-        tooltip: "Agregar Materia Prima",
-        child: Icon(Icons.add),
-      ),
     );
   }
 
@@ -112,30 +97,16 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
             actionPane: SlidableDrawerActionPane(),
             actionExtentRatio: 0.25,
             child: Container(
-              color: Colors.white,
+              color: Colors.blueGrey.shade50,
               child: ListTile(
-                title: Text(materia.nombre),
-                subtitle: Text(materia.descripcion),
+                title: Text(materia.nombre, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
+                subtitle: Text(materia.descripcion, style: TextStyle( color: secondaryColor, fontStyle: FontStyle.italic),),
                 leading: CircleAvatar(
                   backgroundColor: Color.fromARGB(255, 36, 53, 37),
                   child: Text(materia.id.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
                 ),
               ),
             ),
-            secondaryActions: <Widget>[
-              IconSlideAction(
-                caption: 'Editar',
-                color: Colors.indigoAccent,
-                icon: Icons.edit,
-                onTap: (){},
-              ),
-            IconSlideAction(
-                caption: 'Delete',
-                color: Colors.red,
-                icon: Icons.delete,
-                onTap: (){},
-              ),
-            ],
           ),
         ),
       );
