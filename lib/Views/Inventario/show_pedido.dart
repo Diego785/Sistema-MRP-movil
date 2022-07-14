@@ -28,7 +28,12 @@ class _ShowPedidoState extends State<ShowPedido> {
 
 Future<List<Pedido>> _getPedidos() async {
     Uri url =
+<<<<<<< HEAD
         Uri.parse('http://sistema-mrp.herokuapp.com/api/pedido-api');
+=======
+        // Uri.parse('http://sistema-mrp.test/api/pedido-api');
+        Uri.parse('http://192.168.1.2:8000/Sistema-MRP/public/api/pedido-api');
+>>>>>>> b74ca7cc53a74ddd204f6f886fa89a499c497095
     final response = await http.get(url);
     List<Pedido> data = [];
     if (response.statusCode == 200) {

@@ -23,7 +23,10 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
 
   Future<List<MateriaPrima>> _getMaterias() async {
     Uri url =
-        Uri.parse('http://sistema-mrp.herokuapp.com/api/materia-prima-api');
+        // Uri.parse('http://sistema-mrp.herokuapp.com/api/materia-prima-api');
+        Uri.parse('http://192.168.1.2/Sistema-MRP/public/api/materia-prima-api');
+        
+        
     final response = await http.get(url);
     List<MateriaPrima> data = [];
     if (response.statusCode == 200) {
@@ -99,7 +102,7 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
                 title: Text(materia.nombre, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                 subtitle: Text(materia.descripcion, style: TextStyle( color: secondaryColor, fontStyle: FontStyle.italic),),
                 leading: CircleAvatar(
-                  backgroundColor: Colors.green.shade900,
+                  backgroundColor: Color.fromARGB(255, 36, 53, 37),
                   child: Text(materia.id.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
                 ),
               ),

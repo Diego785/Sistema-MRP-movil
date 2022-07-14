@@ -4,8 +4,11 @@ import 'package:provider/provider.dart';
 import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
 import 'package:sistema_mrp/Controllers/Dashboard/MenuController.dart';
 import 'package:sistema_mrp/Controllers/Login/auth.dart';
+import 'package:sistema_mrp/Models/models.dart';
 import 'package:sistema_mrp/Views/main/main_screen.dart';
 import 'package:sistema_mrp/app.dart';
+import 'package:sistema_mrp/Controllers/services.dart';
+
 
 /*void main() {
   //comentario de darwin nise
@@ -24,6 +27,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Auth()),
+        ChangeNotifierProvider(create: (_) => NotaCompraService()),
       ],
       child: MyApp(),
     ),
