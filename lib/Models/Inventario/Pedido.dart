@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 class Pedido {
   String id = "";
   String estado = "";
@@ -5,20 +7,15 @@ class Pedido {
   String direccion = "";
   String fecha = "";
   String hora = "";
-  String? idCliente = "";
-  String? idDistribuidor = "";
-  String? idPedidoCancelado = "";
+  String cliente_id = "";
+  String distribuidor_id = "";
 
-  Pedido(id, estado, descripcion, direccion, fecha, hora, idCliente, idDistribuidor, idPedidodCancelado) {
+  Pedido(id, this.estado, this.descripcion, this.direccion, fecha, hora, idCliente, idDistribuidor) {
     this.id = id.toString();
-    this.estado = estado;
-    this.descripcion = descripcion;
-    this.direccion = direccion;
     this.fecha = fecha.toString();
     this.hora = hora.toString();
-    this.idCliente = idCliente.toString();
-    this.idDistribuidor = idDistribuidor.toString();
-    this.idPedidoCancelado = idPedidoCancelado.toString();
+    this.cliente_id = idCliente.toString();
+    this.distribuidor_id = idDistribuidor.toString();
   }
 
 }

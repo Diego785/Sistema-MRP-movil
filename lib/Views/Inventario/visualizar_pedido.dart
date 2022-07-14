@@ -1,9 +1,15 @@
 import 'dart:convert';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
 import 'package:sistema_mrp/Connection/api.dart';
+import 'package:sistema_mrp/Models/Cliente.dart';
+import 'package:sistema_mrp/Models/Inventario/DetallePedido.dart';
 import 'package:sistema_mrp/Models/Inventario/Pedido.dart';
 import 'package:sistema_mrp/Views/Inventario/show_pedido.dart';
+import 'package:sistema_mrp/Views/Inventario/visualizar_productos_pedido.dart';
 
 class VisualizarPedido extends StatefulWidget {
   final Pedido _pedido;
@@ -13,11 +19,14 @@ class VisualizarPedido extends StatefulWidget {
 }
 
 class _VisualizarPedidoState extends State<VisualizarPedido> {
-  TextEditingController controllerEstado = new TextEditingController();
-  TextEditingController controllerDescripcion = new TextEditingController();
-  TextEditingController controllerDireccion = new TextEditingController();
-  TextEditingController controllerFecha = new TextEditingController();
-  TextEditingController controllerHora = new TextEditingController();
+  TextEditingController controllerCliente = TextEditingController();
+  TextEditingController controllerDistribuidor = TextEditingController();
+  TextEditingController controllerEstado = TextEditingController();
+  TextEditingController controllerDescripcion = TextEditingController();
+  TextEditingController controllerDireccion = TextEditingController();
+  TextEditingController controllerFecha = TextEditingController();
+  TextEditingController controllerHora = TextEditingController();
+  late Future<List<Cliente>> _listClientes;
 
   _update() async {
     var data = {
@@ -36,14 +45,38 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
     }
   }
 
+  Future<List<Cliente>> _getClientePedido() async {
+    Uri url = Uri.parse('http://sistema-mrp.test/api/show/cliente-api/' +
+        widget._pedido.cliente_id);
+    final response = await http.get(url);
+    List<Cliente> data = [];
+    if (response.statusCode == 200) {
+      String body = utf8.decode(response.bodyBytes);
+      final jsonData = jsonDecode(body);
+      for (var item in jsonData) {
+        print(item["id"].toString());
+        print(item["nombre"]);
+        print(item["direccion"]);
+        data.add(Cliente(item["id"].toString(), item["nombre"],
+            item["telefono"], item["direccion"]));
+      }
+      return data;
+    } else {
+      throw Exception("Falló la conexión");
+    }
+  }
+
   @override
   void initState() {
     Pedido p = widget._pedido;
-    controllerEstado = new TextEditingController(text: p.estado);
-    controllerDescripcion = new TextEditingController(text: p.descripcion);
-    controllerDireccion = new TextEditingController(text: p.direccion);
-    controllerFecha = new TextEditingController(text: p.fecha);
-    controllerHora = new TextEditingController(text: p.hora);
+    _listClientes = _getClientePedido();
+    controllerCliente = TextEditingController(text: "Diego");
+    controllerDistribuidor = TextEditingController(text: p.distribuidor_id);
+    controllerEstado = TextEditingController(text: p.estado);
+    controllerDescripcion = TextEditingController(text: p.descripcion);
+    controllerDireccion = TextEditingController(text: p.direccion);
+    controllerFecha = TextEditingController(text: p.fecha);
+    controllerHora = TextEditingController(text: p.hora);
     super.initState();
   }
 
@@ -51,105 +84,214 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Visualizar pedido"),
+        title: const Text("Visualizar pedido"),
         backgroundColor: Colors.green.shade800,
       ),
-      body: ListView(
-        children: [
-          Transform.translate(
-            offset: Offset(0, -90),
-            child: Center(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 35, vertical: 120),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: <Widget>[
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Estado:",
-                        ),
-                        controller: controllerEstado,
-                        readOnly: true,
-                        enabled: false,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Descripción:",
-                        ),
-                        controller: controllerDescripcion,
-                        readOnly: true,
-                        enabled: false,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Dirección:",
-                        ),
-                        controller: controllerDireccion,
-                        readOnly: true,
-                        enabled: false,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Fecha:",
-                        ),
-                        controller: controllerFecha,
-                        readOnly: true,
-                        enabled: false,
-                      ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: "Hora:",
-                        ),
-                        controller: controllerHora,
-                        readOnly: true,
-                        enabled: false,
-                      ),
-                      SizedBox(height: 20),
-                      widget._pedido.estado != "Finalizado"
-                          ? Container(
-                              margin: EdgeInsets.symmetric(
-                                  vertical: 50, horizontal: 0),
+      body: FutureBuilder(
+        future: _listClientes,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView(
+              children: [
+                Transform.translate(
+                  offset: const Offset(0, -90),
+                  child: Center(
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 35, vertical: 120),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Column(
+                              children: _list(context, snapshot.data),
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Distribuidor:",
+                              ),
+                              controller: controllerDistribuidor,
+                              readOnly: true,
+                              enabled: false,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Estado:",
+                              ),
+                              controller: controllerEstado,
+                              readOnly: true,
+                              enabled: false,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Descripción:",
+                              ),
+                              controller: controllerDescripcion,
+                              readOnly: true,
+                              enabled: false,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Dirección:",
+                              ),
+                              controller: controllerDireccion,
+                              readOnly: true,
+                              enabled: false,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Fecha:",
+                              ),
+                              controller: controllerFecha,
+                              readOnly: true,
+                              enabled: false,
+                            ),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: "Hora:",
+                              ),
+                              controller: controllerHora,
+                              readOnly: true,
+                              enabled: false,
+                            ),
+                            const SizedBox(height: 20),
+                            (widget._pedido.estado != "Finalizado" &&
+                                    widget._pedido.estado != "En Manufactura" &&
+                                    widget._pedido.estado != "Cancelado")
+                                ? Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 50, horizontal: 0),
+                                    child: ElevatedButton.icon(
+                                      icon: widget._pedido.estado ==
+                                              "Listo para el envio"
+                                          ? const Icon(Icons.done)
+                                          : const Icon(Icons.verified),
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Colors.green.shade800,
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 90, vertical: 20),
+                                        textStyle: const TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        fixedSize:
+                                            const Size(double.infinity, 60),
+                                      ),
+                                      onPressed: () => setState(() {
+                                        if (widget._pedido.estado ==
+                                            "Pendiente") {
+                                          widget._pedido.estado =
+                                              "Listo para el envio";
+                                        } else {
+                                          widget._pedido.estado = "Finalizado";
+                                        }
+                                        _update();
+                                      }),
+                                      label: widget._pedido.estado ==
+                                              "Listo para el envio"
+                                          ? const Text("Finalizar Pedido")
+                                          : const Text("Verificar Pedido"),
+                                    ),
+                                  )
+                                : Container(),
+                            Container(
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 0, horizontal: 0),
                               child: ElevatedButton.icon(
-                                icon: widget._pedido.estado ==
-                                        "Listo para el envio"
-                                    ? Icon(Icons.done)
-                                    : Icon(Icons.verified),
+                                icon: const Icon(Icons.visibility),
                                 style: ElevatedButton.styleFrom(
-                                  primary: Colors.green.shade800,
-                                  padding: EdgeInsets.symmetric(
+                                  primary: Colors.blue.shade800,
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 90, vertical: 20),
-                                  textStyle: TextStyle(
+                                  textStyle: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
                                   fixedSize: const Size(double.infinity, 60),
                                 ),
-                                onPressed: () => setState(() {
-                                  if (widget._pedido.estado == "Pendiente") {
-                                    widget._pedido.estado =
-                                        "Listo para el envio";
-                                  } else {
-                                    widget._pedido.estado = "Finalizado";
-                                  }
-                                  _update();
-                                }),
-                                label: widget._pedido.estado ==
-                                        "Listo para el envio"
-                                    ? Text("Finalizar Pedido")
-                                    : Text("Verificar Pedido"),
+                                onPressed: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              VisualizarProductosPedido(
+                                                  widget._pedido.id)));
+                                },
+                                label: const Text("Visualizar productos"),
                               ),
-                            )
-                          : Container(),
-                    ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return const Text("No hay datos del Pedido");
+          }
+          return const Center(
+            child: LoadingPage(),
+          );
+        },
+      ),
+    );
+  }
+
+  List<Widget> cardItem(context, data) {
+    List<Widget> detallesPedido = [];
+    for (var detalle in data) {
+      detallesPedido.add(
+        Card(
+          child: Slidable(
+            actionPane: const SlidableDrawerActionPane(),
+            actionExtentRatio: 0.25,
+            child: Container(
+              color: Colors.blueGrey.shade50,
+              child: ListTile(
+                title: Text(
+                  detalle.estado,
+                  style: const TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  detalle.cantidad,
+                  style: const TextStyle(
+                      color: secondaryColor, fontStyle: FontStyle.italic),
+                ),
+                leading: CircleAvatar(
+                  backgroundColor: Colors.green.shade800,
+                  child: Text(detalle.id.toString(),
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontStyle: FontStyle.italic)),
                 ),
               ),
             ),
           ),
-        ],
-      ),
-    );
+        ),
+      );
+    }
+    return detallesPedido;
+  }
+
+  List<Widget> _list(context, data) {
+    List<Widget> clientes = [];
+    for (var cliente in data) {
+      controllerCliente.text = cliente.nombre;
+      clientes.add(
+        TextFormField(
+          decoration: const InputDecoration(
+            labelText: "Cliente:",
+          ),
+          controller: controllerCliente,
+          readOnly: true,
+          enabled: false,
+        ),
+      );
+    }
+    return clientes;
   }
 }

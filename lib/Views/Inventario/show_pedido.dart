@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:sistema_mrp/Menu Aside/nav_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
+import 'package:sistema_mrp/Models/Cliente.dart';
 import 'package:sistema_mrp/Models/Inventario/Pedido.dart';
 import 'package:sistema_mrp/Views/Inventario/visualizar_pedido.dart';
 
@@ -22,10 +23,12 @@ List<Pedido> pedidos = [];
 class _ShowPedidoState extends State<ShowPedido> {
 
   late Future<List<Pedido>> _listPedido;
+  
+
 
 Future<List<Pedido>> _getPedidos() async {
     Uri url =
-        Uri.parse('http://sistema-mrp.test/api/pedido-api');
+        Uri.parse('http://sistema-mrp.herokuapp.com/api/pedido-api');
     final response = await http.get(url);
     List<Pedido> data = [];
     if (response.statusCode == 200) {
@@ -34,6 +37,8 @@ Future<List<Pedido>> _getPedidos() async {
       for (var item in jsonData) {
         print(item["id"]);
         print(item["estado"]);
+        print(item["cliente_id"]);
+        print(item["distribuidor_id"]);
         data.add(Pedido(
             item["id"],
             item["estado"],
@@ -41,15 +46,16 @@ Future<List<Pedido>> _getPedidos() async {
             item["direccion"],
             item["fecha"],
             item["hora"],
-            item["idCliente"],
-            item["idDistribuidor"],
-            item["idPedidoCancelado"]));
+            item["cliente_id"],
+            item["distribuidor_id"]));
       }
       return data;
     } else {
       throw Exception("Falló la conexión");
     }
   }
+
+
 
 
  @override
@@ -121,12 +127,12 @@ List<Widget> cardItem(context, data) {
                 title: Text(pedido.estado, style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
                 subtitle: Text(pedido.descripcion, style: TextStyle( color: secondaryColor, fontStyle: FontStyle.italic),),
                 leading: CircleAvatar(
-                  backgroundColor: pedido.estado == 'Finalizado' ?  Colors.green.shade600 : (pedido.estado == 'Listo para el envio' ? Colors.blue.shade600 : Colors.red.shade600 ),
+                  backgroundColor: pedido.estado == 'Finalizado' ?  Colors.green.shade600 : (pedido.estado == 'Listo para el envio' ? Colors.blue.shade600 : (pedido.estado == 'Pendiente' ? Colors.yellow.shade700 : (pedido.estado == 'Cancelado' ? Colors.red.shade700 : Colors.cyan.shade700 ))),
                   child: Text(pedido.id.toString(), style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontStyle: FontStyle.italic)),
                 ),
               ),
             ),
-            actions: pedido.estado != "Finalizado" ? <Widget>[
+            actions: pedido.estado == "Pendiente" ? <Widget>[
                IconSlideAction(
                 caption: 'Eliminar',
                 color: Colors.red,
@@ -190,7 +196,7 @@ List<Widget> cardItem(context, data) {
 
  Future delete(id) async {
     String urls =
-        "http://sistema-mrp.test/api/pedido-api/delete/" +
+        "http://sistema-mrp.herokuapp.com/api/pedido-api/delete/" +
             id.toString();
     print("ENTRO");
     Uri url = Uri.parse(urls);

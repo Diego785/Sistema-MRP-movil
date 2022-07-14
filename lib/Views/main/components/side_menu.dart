@@ -102,6 +102,25 @@ class SideMenu extends StatelessWidget {
               onTap: () => Navigator.pushNamed(context, "/pedido"),
             ),
             const Divider(),
+            ListTile(
+              leading: Icon(Icons.person),
+              title: const Text("Clientes"),
+              onTap: () {},
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(Icons.arrow_downward),
+              title: const Text("Proveedores"),
+              onTap: () {},
+            ),
+            const Divider(),
+            ListTile(
+              leading: Icon(Icons.arrow_upward),
+              title: const Text("Distribuidores"),
+              onTap: () {},
+            ),
+            const Divider(),
+            
             /*  ListTile(
               leading: Icon(Icons.share),
               title: Text("Share"),

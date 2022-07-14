@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 class CallApi {
-  String url = "http://sistema-mrp.test/api/";
+  String url = "http://sistema-mrp.herokuapp.com/api/";
   postData(data, url2) async {
     String urlFinal = url + url2;
     return await http.post(

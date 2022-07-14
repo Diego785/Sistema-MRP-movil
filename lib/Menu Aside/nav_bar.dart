@@ -69,6 +69,27 @@ class NavBar extends StatelessWidget {
               onTap: () => Navigator.pushNamed(context, "/producto"),
             ),
             const Divider(),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.work),
+              title: Text("Clientes"),
+              onTap: () {}
+              ,
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.work),
+              title: Text("Proveedores"),
+              onTap: () {}
+              ,
+            ),
+            Divider(),
+            ListTile(
+              leading: Icon(Icons.work),
+              title: Text("Distribuidores"),
+              onTap: () {}
+              ,
+            ),
           /*  ListTile(
               leading: Icon(Icons.share),
               title: Text("Share"),
