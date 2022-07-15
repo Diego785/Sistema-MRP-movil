@@ -46,6 +46,7 @@ class NotaCompraScreen extends StatelessWidget {
             // print(notaCompraService.selectedBus.id.toString()),
             notaCompraService
                 .loadMateriaPrima(notaCompraService.selectedCompra.id),
+                
             if (notaCompraService.isLoading) debugPrint('cargando materiaPrima'),
             Navigator.pushNamed(context, '/detalle-compra'),
           },
