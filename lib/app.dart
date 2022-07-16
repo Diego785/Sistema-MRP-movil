@@ -9,18 +9,19 @@ import 'package:sistema_mrp/Views/Inventario/NotaCompra/detalle_compra_screen.da
 import 'package:sistema_mrp/Views/Inventario/show_pedido.dart';
 import 'package:sistema_mrp/Views/Inventario/visualizar_pedido.dart';
 import 'package:sistema_mrp/Views/main/main_screen.dart';
+import 'package:sistema_mrp/Views/pdf/pdf_page.dart';
 import 'Views/views.dart';
 
 
 
 class MyApp extends StatelessWidget {
-  //const MyApp({Key? key}) : super(key: key);
-
+    static const String title = 'SISTEMA MRP';
+  const MyApp({Key? key}) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'SISTEMA MRP',
+      title: title,
       initialRoute: '/',
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: bgColor,
@@ -69,13 +70,15 @@ class MyApp extends StatelessWidget {
               return ProductoScreen();
             case '/pedido':
               return ShowPedido();
-              case '/nota-compra':
+            case '/nota-compra':
               return const NotaCompraScreen();
-              case '/detalle-compra':
+             case '/detalle-compra':
               return const DetalleCompraScreen();
+             case '/reportes':
+              return  PdfPage();
          
           }
-          return Text("xd");
+          return const Text("xd");
         });
       },
     );

@@ -3,3 +3,6 @@ export 'package:sistema_mrp/Models/Inventario/MateriaPrima1.dart';
 export 'Inventario/MateriaPrima.dart';
 export 'user.dart';
 export 'package:sistema_mrp/Models/Inventario/NotaCompra.dart';
+export 'package:sistema_mrp/Models/prueba/customer.dart';
+export 'package:sistema_mrp/Models/prueba/invoice.dart';
+export 'package:sistema_mrp/Models/prueba/supplier.dart';
