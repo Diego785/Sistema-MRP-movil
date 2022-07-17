@@ -17,7 +17,6 @@ class MateriaPrima1 {
     required this.peso,
     required this.color,
     required this.cantidad,
-    required this.costo,
   });
 
   int id;
@@ -28,30 +27,28 @@ class MateriaPrima1 {
   String peso;
   String color;
   int cantidad;
-  String costo;
+
   static List<String> atributos = [
     'id',
     'nombre',
     'tipo',
     'descripcion',
-    'tamao',
+    'tamaño',
     'peso',
     'color',
     'cantidad',
-    'costo'
   ];
 
-  
   factory MateriaPrima1.fromJson(Map<String, dynamic> json) => MateriaPrima1(
         id: json["id"],
-        nombre: json["nombre"],
+        nombre: json["nombre"] ?? '',
         tipo: json["tipo"],
         descripcion: json["descripcion"],
         tamao: json["tamaño"],
         peso: json["peso"],
         color: json["color"],
         cantidad: json["cantidad"],
-        costo: json["costo"],
+        // costo: json["costo"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -63,6 +60,17 @@ class MateriaPrima1 {
         "peso": peso,
         "color": color,
         "cantidad": cantidad,
-        "costo": costo,
+        // "costo": costo,
       };
+
+  List<dynamic> toListString() => [
+      id,
+      nombre,
+      tipo,
+      descripcion,
+      tamao,
+      peso,
+      color,
+      cantidad,
+    ];
 }

@@ -14,7 +14,7 @@ class NotaCompraService extends ChangeNotifier {
   bool isSaving = false;
   //----------------------------------------------------------------------------
   NotaCompraService() {
-    loadCompras();
+    // loadCompras();
   }
 
   //----------------------------------------------------------------------------
@@ -49,4 +49,23 @@ class NotaCompraService extends ChangeNotifier {
     notifyListeners();
     return listaMateria;
   }
+
+  Future<List<MateriaPrima1>> loadMateriaPrimas() async {
+    listaMateria = [];
+    isLoading = true;
+    notifyListeners();
+    final resp = await http.get(Uri.parse('$_baseUrl/materia-prima-api2'));
+    final jsonResponse = json.decode(resp.body);
+    for (var item in jsonResponse['data']) {
+      MateriaPrima1 materia = MateriaPrima1.fromJson(item);
+      debugPrint('$item');
+      listaMateria.add(materia);
+    }
+    isLoading = false;
+    notifyListeners();
+    return listaMateria;
+  }
+
+
+
 }

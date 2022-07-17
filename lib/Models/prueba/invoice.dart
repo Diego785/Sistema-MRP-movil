@@ -5,7 +5,7 @@ class Invoice {
   final InvoiceInfo info;
   final Supplier supplier;
   final Customer customer;
-  final List<InvoiceItem> items;
+  final Map<String, List<dynamic>> items;
 
   const Invoice({
     required this.info,

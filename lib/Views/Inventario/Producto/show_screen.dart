@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'package:sistema_mrp/Models/models.dart';
 
 class ProductoShowScreen extends StatefulWidget {
+  const ProductoShowScreen({Key? key}) : super(key: key);
+
   @override
   _ProductoShowScreenState createState() => _ProductoShowScreenState();
 }

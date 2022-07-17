@@ -86,7 +86,7 @@ class DetalleCompraScreen extends StatelessWidget {
         decoration: const InputDecoration(
           labelText: "costo:",
         ),
-        controller: TextEditingController(text: item.costo),
+        // controller: TextEditingController(text: item.costo),
         readOnly: true,
         enabled: false,
       );
