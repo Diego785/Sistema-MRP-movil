@@ -7,23 +7,33 @@ import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/widgets.dart';
 
 class PdfInvoiceApi {
-  
+
+
   static Future<File> generate(Invoice invoice) async {
     final pdf = Document();
+    pdf.addPage( getMultiPage(invoice) );
 
-    pdf.addPage(MultiPage(
+    return PdfApi.saveDocument(name: 'my_invoice.pdf', pdf: pdf);
+  }
+
+  static Future generateAndShow(Invoice invoice) async {
+    final pdf = Document();
+    pdf.addPage( getMultiPage(invoice) );
+    return pdf.save();
+  }
+
+  static pw.MultiPage getMultiPage(Invoice invoice) {
+    return MultiPage(
       build: (context) => [
         buildHeader(invoice),
         SizedBox(height: 3 * PdfPageFormat.cm),
         buildTitle(invoice),
         buildInvoice(invoice),
         Divider(),
-        buildTotal(invoice),
+        // buildTotal(invoice),
       ],
       footer: (context) => buildFooter(invoice),
-    ));
-
-    return PdfApi.saveDocument(name: 'my_invoice.pdf', pdf: pdf);
+    );
   }
 
   static Widget buildHeader(Invoice invoice) => Column(
@@ -121,6 +131,7 @@ class PdfInvoiceApi {
       'VAT',
       'Total'
     ];
+    
     final data = invoice.items.map((item) {
       final total = item.unitPrice * item.quantity * (1 + item.vat);
 
