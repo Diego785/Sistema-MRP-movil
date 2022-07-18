@@ -8,14 +8,17 @@ class NotaCompraService extends ChangeNotifier {
       'http://192.168.1.2:8000/Sistema-MRP/public/api'; //?included=detalle_compras';
   final List<NotaCompra> listaCompras = [];
   late NotaCompra selectedCompra;
-   List<MateriaPrima1> listaMateria = [];
+  List<MateriaPrima1> listaMateria = [];
   late MateriaPrima1 selectedMateria;
+  List<Producto> listaProductos = [];
   bool isLoading = true;
   bool isSaving = false;
   //----------------------------------------------------------------------------
   NotaCompraService() {
     // loadCompras();
   }
+
+  get convert => null;
 
   //----------------------------------------------------------------------------
   Future<List<NotaCompra>> loadCompras() async {
@@ -36,7 +39,8 @@ class NotaCompraService extends ChangeNotifier {
     listaMateria = [];
     isLoading = true;
     notifyListeners();
-    final resp = await http.get(Uri.parse('$_baseUrl/nota-compra-detalles/$id'));
+    final resp =
+        await http.get(Uri.parse('$_baseUrl/nota-compra-detalles/$id'));
     final jsonResponse = json.decode(resp.body);
     debugPrint('-----');
     debugPrint('$jsonResponse');
@@ -66,6 +70,15 @@ class NotaCompraService extends ChangeNotifier {
     return listaMateria;
   }
 
-
+  Future<List<Producto>> loadProductos() async {
+    isLoading = true;
+    notifyListeners();
+    final resp = await http.get(Uri.parse('$_baseUrl/productos'));
+    final dataProducto = DataProducto.fromMap(json.decode(resp.body));
+    listaProductos = dataProducto.productos;
+    isLoading = false;
+    notifyListeners();
+    return listaProductos;
+  }
 
 }

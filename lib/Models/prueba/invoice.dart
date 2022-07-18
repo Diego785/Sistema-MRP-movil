@@ -6,12 +6,14 @@ class Invoice {
   final Supplier supplier;
   final Customer customer;
   final Map<String, List<dynamic>> items;
+  final String keySelect;
 
   const Invoice({
     required this.info,
     required this.supplier,
     required this.customer,
     required this.items,
+    required this.keySelect,
   });
 }
 

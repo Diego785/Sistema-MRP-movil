@@ -47,7 +47,9 @@ class ShowPdfScreen extends StatelessWidget {
           description: 'My description...',
           number: '${DateTime.now().year}-9999', //cadena encriptada en QR
         ),
-        items: {}
+        items: {},
+        keySelect: ''
+
         // items: [
         // InvoiceItem(
         //   description: 'Coffee',

@@ -34,48 +34,54 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(builder: (BuildContext context) {
-          switch (settings.name) {
-            case '/':
-              return Drawer(
-                  child: Consumer<Auth>(builder: (context, auth, child) {
-                if (!auth.authenticated) {
-                  return LoginPage();
-                } else {
-                  return WelcomePage();
-                }
-              }));
+        return MaterialPageRoute(
+          builder: (BuildContext context) {
+            switch (settings.name) {
+              case '/':
+                return Drawer(
+                    child: Consumer<Auth>(builder: (context, auth, child) {
+                  if (!auth.authenticated) {
+                    return LoginPage();
+                  } else {
+                    return WelcomePage();
+                  }
+                }));
 
-            case '/login':
-              return LoginPage();
-            case '/home':
-              return WelcomePage();
-            case '/main-screen':
-              return MultiProvider(
-                providers: [
-                  ChangeNotifierProvider(
-                    create: (context) => MenuController(),
-                  ),
-                ],
-                child: MainScreen(),
-              );
-            case '/materia-prima':
-              return ShowMateriaPrima();
-            case '/producto':
-              return ProductoScreen();
-            case '/pedido':
-              return ShowPedido();
-            case '/nota-compra':
-              return const NotaCompraScreen();
-            case '/detalle-compra':
-              return const DetalleCompraScreen();
-            case '/reportes':
-              return const PdfPageScreen();
-            case '/show-pdf':
-              return const ShowPdfScreen();
-          }
-          return const Text("xd");
-        });
+              case '/login':
+                return LoginPage();
+              case '/home':
+                return WelcomePage();
+              case '/main-screen':
+                return MultiProvider(
+                  providers: [
+                    ChangeNotifierProvider(
+                      create: (context) => MenuController(),
+                    ),
+                  ],
+                  child: MainScreen(),
+                );
+              case '/materia-prima':
+                return ShowMateriaPrima();
+              case '/producto':                
+                return  ProductoScreen();
+              case '/pedido':
+                return ShowPedido();
+              case '/nota-compra':
+                return const NotaCompraScreen();
+              case '/detalle-compra':
+                return const DetalleCompraScreen();
+              case '/reportes':
+                return const PdfPageScreen();
+              case '/show-pdf':
+                return const ShowPdfScreen();
+            }
+            return const Text("error");
+          },
+        );
+      },
+      //esto es para mandar variables por las rutas
+      routes: {
+        '/producto-show':(_) => const ProductoShowScreen(),
       },
     );
   }

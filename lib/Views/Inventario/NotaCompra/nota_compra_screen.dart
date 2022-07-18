@@ -8,6 +8,7 @@ class NotaCompraScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notaCompraService = Provider.of<NotaCompraService>(context);
+    notaCompraService.loadCompras();
     // final VehicleService vehicleServices = Provider.of<VehicleService>(context);
     if (notaCompraService.isLoading) debugPrint("cargando Notas de Compra");
     return Scaffold(

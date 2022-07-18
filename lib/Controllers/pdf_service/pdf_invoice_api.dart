@@ -111,7 +111,7 @@ class PdfInvoiceApi {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'INVOICE',
+            invoice.keySelect,
             style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
           ),
           SizedBox(height: 0.8 * PdfPageFormat.cm),
@@ -121,11 +121,25 @@ class PdfInvoiceApi {
       );
 
   static Widget buildInvoice(Invoice invoice) {
-    final headers = MateriaPrima1.atributos;
-    print('${invoice.items['materia-prima']!.length}');
-    List<dynamic> objetos = invoice.items['materia-prima']!;
+    final key = invoice.keySelect;
+    List<String> headers = [];
+    switch (key) {
+      case 'materia-prima':
+        {
+          headers = MateriaPrima1.atributos; //8
+        }
+        break;
+      case 'productos':
+        {
+          headers = Producto.atributos; //7
+        }
+        break;
+    }
+
+    print(headers.length);
+    print('${invoice.items[key]!.length}');
+    List<dynamic> objetos = invoice.items[key]!;
     final data = objetos.map((item) {
-      // List<dynamic> r = item.toListString();
       List<dynamic> r = item.toListString();
       return r;
     }).toList();
