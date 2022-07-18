@@ -44,8 +44,11 @@ class _ProductoScreenState extends State<ProductoScreen> {
     return FutureBuilder(
       future: cargarProductos(),
       builder: (context, AsyncSnapshot<List<Producto>> snapshot) {
-        if (!snapshot.hasData) {
-          return const ListTile(title: Text('No hay Consultas'));
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          // return const ListTile(title: Text('No hay Porductos'));
+          return const Center(
+            child: Text('No hay Productos'),
+          );
         }
         return ListView(
           children: getListaDeProductos(snapshot.data, context),
@@ -57,72 +60,72 @@ class _ProductoScreenState extends State<ProductoScreen> {
   List<Widget> getListaDeProductos(List<Producto>? data, BuildContext context) {
     final List<Widget> listaDeWidget = [];
     if (data != null) {
-      print("inicio for");
+      int i = 0;
       for (Producto product in data) {
-        // print(opt);
-        // final widgetTemp = ListTile(
-        //     title: Text(opt.nombre.toString()),
-        //     onTap: () {
-        //       Navigator.pushNamed(context, 'productoShow', arguments: opt);
-        //     });
-        // listaDeWidget.add(widgetTemp);
-        // listaDeWidget.add(const Divider());
-        Card widgetTemp = Card(
-          child: Slidable(
-            actionPane: const SlidableDrawerActionPane(),
-            actionExtentRatio: 0.25,
-            child: Container(
-              color: Colors.white,
-              child: ListTile(
-                title: Text(product.nombre.toString()),
-                subtitle: Text(product.descripcion.toString()),
-                leading: CircleAvatar(
-                  backgroundColor: const Color.fromARGB(255, 36, 53, 37),
-                  child: Text(product.id.toString(),
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontStyle: FontStyle.italic)),
-                ),
-              ),
-            ),
-            secondaryActions: <Widget>[
-              IconSlideAction(
-                caption: 'Detalle',
-                color: Colors.indigoAccent,
-                icon: Icons.show_chart,
-                onTap: (){Navigator.pushNamed(context, 'productoShow', arguments: product);},
-              ),
-            IconSlideAction(
-                caption: 'Delete',
-                color: Colors.red,
-                icon: Icons.delete,
-                onTap: (){},
-              ),
-            ],
-          ),
-        );
+        i++;
+        Card widgetTemp = getCard(product, i, context);
         listaDeWidget.add(widgetTemp);
-        // listaDeWidget.add(const Divider());
       }
     }
     return listaDeWidget;
   }
 
+  Card getCard(Producto product, int i, BuildContext context) {
+    return Card(
+        child: Slidable(
+          actionPane: const SlidableDrawerActionPane(),
+          actionExtentRatio: 0.25,
+          child: Container(
+            color: Colors.black,
+            child: ListTile(
+              title: Text(product.nombre,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  )),
+              subtitle: Text(product.descripcion,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  )),
+              leading: CircleAvatar(
+                backgroundColor: const Color.fromARGB(255, 36, 53, 37),
+                child: Text('${product.id}',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontStyle: FontStyle.italic)),
+              ),
+            ),
+          ),
+          secondaryActions: <Widget>[
+            IconSlideAction(
+              caption: 'Detalle',
+              color: Colors.indigoAccent,
+              icon: Icons.show_chart,
+              onTap: () {
+                debugPrint('$i');
+                Navigator.pushNamed(context, '/producto-show',
+                    arguments: product);
+              },
+            ),
+            IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: () {},
+            ),
+          ],
+        ),
+      );
+  }
+
   //conexion ala al servicio api -> return lista de productos
   Future<List<Producto>> cargarProductos() async {
     var response = await http
-        // .get(Uri.parse('http://10.0.2.2/Sistema-MRP/public/api/productos'));
-        .get(Uri.parse('http://193.123.119.53/public/api/productos'));
-        
-    // print("RESPUESTA GET: :  Views.Producto._getProducto => " + response.body);
-    var jsonResponse = convert.jsonDecode(response.body)['data'];
-    for (var item in jsonResponse) {
-      Producto product = Producto.fromMap(item);
-      // print(product);
-      listaDeProductos.add(product);
-    }
-    // print('salio del for');
-    return listaDeProductos;
+        // .get(Uri.parse('http://193.123.119.53/public/api/productos'));
+        .get(Uri.parse(
+            'http://192.168.1.2:8000/Sistema-MRP/public/api/productos'));
+    final dataProducto =
+        DataProducto.fromMap(convert.jsonDecode(response.body));
+    return dataProducto.productos;
   }
 }

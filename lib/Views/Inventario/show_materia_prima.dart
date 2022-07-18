@@ -24,7 +24,7 @@ class _ShowMateriaPrima extends State<ShowMateriaPrima> {
   Future<List<MateriaPrima>> _getMaterias() async {
     Uri url =
         // Uri.parse('http://sistema-mrp.herokuapp.com/api/materia-prima-api');
-        Uri.parse('http://192.168.1.2/Sistema-MRP/public/api/materia-prima-api');
+        Uri.parse('http://192.168.1.2:8000/Sistema-MRP/public/api/materia-prima-api');
         
         
     final response = await http.get(url);

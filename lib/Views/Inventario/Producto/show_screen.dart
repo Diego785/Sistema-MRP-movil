@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'package:sistema_mrp/Models/models.dart';
 
 class ProductoShowScreen extends StatefulWidget {
+  const ProductoShowScreen({Key? key}) : super(key: key);
+
   @override
   _ProductoShowScreenState createState() => _ProductoShowScreenState();
 }
@@ -17,7 +19,7 @@ class _ProductoShowScreenState extends State<ProductoShowScreen> {
     Producto? product = ModalRoute.of(context)!.settings.arguments as Producto?;
     // ModalRoute.of(context)!.settings.arguments as Producto;
     if (product == null) {
-      print("nullTx");
+      print("falta producto");
       return Text("nullTx");
     } else {
       return Scaffold(

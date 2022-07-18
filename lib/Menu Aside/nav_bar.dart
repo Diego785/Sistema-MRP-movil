@@ -90,6 +90,7 @@ class NavBar extends StatelessWidget {
               onTap: () {}
               ,
             ),
+            
           /*  ListTile(
               leading: Icon(Icons.share),
               title: Text("Share"),

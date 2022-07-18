@@ -1,49 +1,57 @@
-// To parse this JSON data, do
-//
-//     final materiaPrima1 = materiaPrima1FromJson(jsonString);
-
 import 'dart:convert';
 
-List<MateriaPrima1> materiaPrima1FromJson(String str) => List<MateriaPrima1>.from(json.decode(str).map((x) => MateriaPrima1.fromJson(x)));
+List<MateriaPrima1> materiaPrima1FromJson(String str) =>
+    List<MateriaPrima1>.from(
+        json.decode(str).map((x) => MateriaPrima1.fromJson(x)));
 
-String materiaPrima1ToJson(List<MateriaPrima1> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String materiaPrima1ToJson(List<MateriaPrima1> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class MateriaPrima1 {
-    MateriaPrima1({
-        required this.id,
-        required this.nombre,
-        required this.tipo,
-        required this.descripcion,
-        required this.tamao,
-        required this.peso,
-        required this.color,
-        required this.cantidad,
-        required this.costo,
-    });
+  MateriaPrima1({
+    required this.id,
+    required this.nombre,
+    required this.tipo,
+    required this.descripcion,
+    required this.tamao,
+    required this.peso,
+    required this.color,
+    required this.cantidad,
+  });
 
-    int id;
-    String nombre;
-    String tipo;
-    String descripcion;
-    String tamao;
-    String peso;
-    String color;
-    int cantidad;
-    String costo;
+  int id;
+  String nombre;
+  String tipo;
+  String descripcion;
+  String tamao;
+  String peso;
+  String color;
+  int cantidad;
 
-    factory MateriaPrima1.fromJson(Map<String, dynamic> json) => MateriaPrima1(
+  static List<String> atributos = [
+    'id',
+    'nombre',
+    'tipo',
+    'descripcion',
+    'tamaño',
+    'peso',
+    'color',
+    'cantidad',
+  ];
+
+  factory MateriaPrima1.fromJson(Map<String, dynamic> json) => MateriaPrima1(
         id: json["id"],
-        nombre: json["nombre"],
+        nombre: json["nombre"] ?? '',
         tipo: json["tipo"],
         descripcion: json["descripcion"],
         tamao: json["tamaño"],
         peso: json["peso"],
         color: json["color"],
         cantidad: json["cantidad"],
-        costo: json["costo"],
-    );
+        // costo: json["costo"],
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "id": id,
         "nombre": nombre,
         "tipo": tipo,
@@ -52,6 +60,17 @@ class MateriaPrima1 {
         "peso": peso,
         "color": color,
         "cantidad": cantidad,
-        "costo": costo,
-    };
+        // "costo": costo,
+      };
+
+  List<dynamic> toListString() => [
+      id,
+      nombre,
+      tipo,
+      descripcion,
+      tamao,
+      peso,
+      color,
+      cantidad,
+    ];
 }

@@ -121,9 +121,15 @@ class SideMenu extends StatelessWidget {
             ),
             const Divider(),
              ListTile(
-            leading: Icon(Icons.upcoming),
+            leading: const Icon(Icons.note_outlined),
               title: const Text("Nota de Compras"),
               onTap: () => Navigator.pushNamed(context, "/nota-compra"),
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.picture_as_pdf),
+              title: const Text("Reportes"),
+              onTap: () =>  Navigator.pushNamed(context, "/reportes"),
             ),
             const Divider(),
             /*  ListTile(
