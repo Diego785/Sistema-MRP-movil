@@ -9,7 +9,6 @@ import 'package:sistema_mrp/Views/main/main_screen.dart';
 import 'package:sistema_mrp/app.dart';
 import 'package:sistema_mrp/Controllers/services.dart';
 
-
 /*void main() {
   //comentario de darwin nise
   runApp(
@@ -27,7 +26,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => Auth()),
-        ChangeNotifierProvider(create: (_) => NotaCompraService()),
+        ChangeNotifierProvider(create: (_) => Service()),
       ],
       child: MyApp(),
     ),

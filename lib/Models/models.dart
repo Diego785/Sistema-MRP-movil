@@ -6,3 +6,5 @@ export 'package:sistema_mrp/Models/Inventario/NotaCompra.dart';
 export 'package:sistema_mrp/Models/prueba/customer.dart';
 export 'package:sistema_mrp/Models/prueba/invoice.dart';
 export 'package:sistema_mrp/Models/prueba/supplier.dart';
+export 'package:sistema_mrp/Models/Proveedor.dart';
+export 'package:sistema_mrp/Models/Distribuidor.dart';

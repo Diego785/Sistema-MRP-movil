@@ -15,7 +15,7 @@ class PdfPageScreen extends StatefulWidget {
 class _PdfPageScreenState extends State<PdfPageScreen> {
   @override
   Widget build(BuildContext context) {
-    final notaCompraService = Provider.of<NotaCompraService>(context);
+    final service = Provider.of<Service>(context);
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -24,7 +24,7 @@ class _PdfPageScreenState extends State<PdfPageScreen> {
         centerTitle: true,
       ),
       body: Container(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.all(10),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -33,14 +33,44 @@ class _PdfPageScreenState extends State<PdfPageScreen> {
                 icon: Icons.picture_as_pdf,
                 text: 'Reportes',
               ),
+              const SizedBox(height: 5),
+              ButtonWidget(
+                text: 'Clientes PDF',
+                onClicked: () async {
+                  service.loadClientes();
+                  await Future.delayed(const Duration(seconds: 1));
+                  const String key = 'clientes';
+                  final Map<String, List<dynamic>> items = {
+                    key: service.listaClientes
+                  };
+                  final res = getInvoice(items, key);
+                  final pdfFile = await PdfInvoiceApi.generate(res);
+                  PdfApi.openFile(pdfFile);
+                },
+              ),
+              const SizedBox(height: 5),
+              ButtonWidget(
+                text: 'Proveedores PDF',
+                onClicked: () async {
+                  service.loadProveedores();
+                  await Future.delayed(const Duration(seconds: 1));
+                  const String key = 'proveedores';
+                  final items = {key: service.listaProveedores};
+                  final res = getInvoice(items, key);
+                  final pdfFile = await PdfInvoiceApi.generate(res);
+                  PdfApi.openFile(pdfFile);
+                },
+              ),
               const SizedBox(height: 10),
               ButtonWidget(
                 text: 'Materia Prima PDF',
                 onClicked: () async {
-                  notaCompraService.loadMateriaPrimas();
+                  service.loadMateriaPrimas();
                   await Future.delayed(const Duration(seconds: 2));
                   const String key = 'materia-prima';
-                  final Map<String, List<dynamic>> items = { key : notaCompraService.listaMateria};
+                  final Map<String, List<dynamic>> items = {
+                    key: service.listaMateria
+                  };
                   final res = getInvoice(items, key);
                   final pdfFile = await PdfInvoiceApi.generate(res);
                   PdfApi.openFile(pdfFile);
@@ -50,75 +80,46 @@ class _PdfPageScreenState extends State<PdfPageScreen> {
               ButtonWidget(
                 text: 'Productos PDF',
                 onClicked: () async {
-                  notaCompraService.loadProductos();
+                  service.loadProductos();
                   await Future.delayed(const Duration(seconds: 2));
                   const String key = 'productos';
-                  final Map<String, List<dynamic>> items = {key : notaCompraService.listaProductos};
+                  final Map<String, List<dynamic>> items = {
+                    key: service.listaProductos
+                  };
                   final res = getInvoice(items, key);
                   final pdfFile = await PdfInvoiceApi.generate(res);
                   PdfApi.openFile(pdfFile);
                 },
               ),
-               const SizedBox(height: 5),
+
+              const SizedBox(height: 5),
+              ButtonWidget(
+                text: 'Distribuidoras PDF',
+                onClicked: () async {
+                  service.loadDistribuidores();
+                  await Future.delayed(const Duration(seconds: 1));
+                  const key = 'distribuidores';
+                  final items = {key: service.listaDistribuidores};
+                  final res = getInvoice(items, key);
+                  final pdfFile = await PdfInvoiceApi.generate(res);
+                  PdfApi.openFile(pdfFile);
+                },
+              ),
+              const SizedBox(height: 5),
+              ButtonWidget(
+                text: 'Maquinarias PDF',
+                onClicked: () async {},
+              ),
+              const SizedBox(height: 5),
               ButtonWidget(
                 text: 'Compras PDF',
                 onClicked: () async {
-                  notaCompraService.loadProductos();
-                  await Future.delayed(const Duration(seconds: 2));
-                  const String key = 'productos';
-                  final Map<String, List<dynamic>> items = {key : notaCompraService.listaProductos};
-                  final res = getInvoice(items, key);
-                  final pdfFile = await PdfInvoiceApi.generate(res);
-                  PdfApi.openFile(pdfFile);
-                },
-              ),
-               const SizedBox(height: 5),
-              ButtonWidget(
-                text: 'Pedidos PDF',
-                onClicked: () async {
-                  notaCompraService.loadProductos();
-                  await Future.delayed(const Duration(seconds: 2));
-                  const String key = 'productos';
-                  final Map<String, List<dynamic>> items = {key : notaCompraService.listaProductos};
-                  final res = getInvoice(items, key);
-                  final pdfFile = await PdfInvoiceApi.generate(res);
-                  PdfApi.openFile(pdfFile);
-                },
-              ),
-               const SizedBox(height: 5),
-              ButtonWidget(
-                text: 'Clientes PDF',
-                onClicked: () async {
-                  notaCompraService.loadProductos();
-                  await Future.delayed(const Duration(seconds: 2));
-                  const String key = 'productos';
-                  final Map<String, List<dynamic>> items = {key : notaCompraService.listaProductos};
-                  final res = getInvoice(items, key);
-                  final pdfFile = await PdfInvoiceApi.generate(res);
-                  PdfApi.openFile(pdfFile);
-                },
-              ),
-               const SizedBox(height: 5),
-              ButtonWidget(
-                text: 'Productos PDF',
-                onClicked: () async {
-                  notaCompraService.loadProductos();
-                  await Future.delayed(const Duration(seconds: 2));
-                  const String key = 'productos';
-                  final Map<String, List<dynamic>> items = {key : notaCompraService.listaProductos};
-                  final res = getInvoice(items, key);
-                  final pdfFile = await PdfInvoiceApi.generate(res);
-                  PdfApi.openFile(pdfFile);
-                },
-              ),
-               const SizedBox(height: 5),
-              ButtonWidget(
-                text: 'Pedidos PDF',
-                onClicked: () async {
-                  notaCompraService.loadProductos();
-                  await Future.delayed(const Duration(seconds: 2));
-                  const String key = 'productos';
-                  final Map<String, List<dynamic>> items = {key : notaCompraService.listaProductos};
+                  service.loadCompras();
+                  await Future.delayed(const Duration(seconds: 1));
+                  const String key = 'nota compras';
+                  Map<String, List<dynamic>> items = {
+                    key: service.listaCompras
+                  };
                   final res = getInvoice(items, key);
                   final pdfFile = await PdfInvoiceApi.generate(res);
                   PdfApi.openFile(pdfFile);

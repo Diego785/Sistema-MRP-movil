@@ -7,7 +7,7 @@ class DetalleCompraScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notaCompraService = Provider.of<NotaCompraService>(context);
+    final notaCompraService = Provider.of<Service>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +36,7 @@ class DetalleCompraScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> cargar(NotaCompraService notaCompraService) {
+  List<Widget> cargar(Service notaCompraService) {
     debugPrint('lista---------');
     debugPrint('${notaCompraService.listaMateria.length}');
     List<Widget> lista = [];

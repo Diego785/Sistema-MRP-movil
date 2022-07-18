@@ -49,9 +49,9 @@ class NotaCompra {
     id,
     costoTotal,
     hora,
-    fecha    ,
+    fecha,
   ];
-  
+
   factory NotaCompra.fromJson(Map<String, dynamic> json) => NotaCompra(
         id: json["id"],
         costoTotal: json["costo_total"],

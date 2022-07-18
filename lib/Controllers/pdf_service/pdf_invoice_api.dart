@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:sistema_mrp/Controllers/services.dart';
+import 'package:sistema_mrp/Models/Cliente.dart';
 import 'package:sistema_mrp/Models/models.dart';
 import 'package:sistema_mrp/utils.dart';
 import 'package:pdf/pdf.dart';
@@ -134,6 +135,26 @@ class PdfInvoiceApi {
           headers = Producto.atributos; //7
         }
         break;
+      case 'nota compras':
+        {
+          headers = NotaCompra.atributos; //7
+        }
+        break;
+      case 'clientes':
+        {
+          headers = Cliente.atributos; //7
+        }
+        break;
+      case 'proveedores':
+        {
+          headers = Proveedor.atributos; //7
+        }
+        break;
+      case 'distribuidores':
+        {
+          headers = Distribuidor.atributos; //7
+        }
+        break;
     }
 
     print(headers.length);
@@ -146,11 +167,13 @@ class PdfInvoiceApi {
     return Table.fromTextArray(
       headers: headers,
       data: data,
-      border: null,
+      border: TableBorder.all(),
       headerStyle: TextStyle(fontWeight: FontWeight.bold),
       headerDecoration: const BoxDecoration(color: PdfColors.grey300),
       cellHeight: 30,
       defaultColumnWidth: const FixedColumnWidth(20.0),
+      // columnWidths: {0: const FlexColumnWidth(30)},
+      cellAlignment: Alignment.topCenter,
     );
   }
 

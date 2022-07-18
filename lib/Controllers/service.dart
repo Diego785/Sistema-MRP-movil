@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sistema_mrp/Models/Cliente.dart';
 import 'dart:convert';
 import 'package:sistema_mrp/Models/models.dart';
 
-class NotaCompraService extends ChangeNotifier {
+class Service extends ChangeNotifier {
   final String _baseUrl =
       'http://192.168.1.2:8000/Sistema-MRP/public/api'; //?included=detalle_compras';
   final List<NotaCompra> listaCompras = [];
@@ -11,11 +12,14 @@ class NotaCompraService extends ChangeNotifier {
   List<MateriaPrima1> listaMateria = [];
   late MateriaPrima1 selectedMateria;
   List<Producto> listaProductos = [];
+  List<Cliente> listaClientes = [];
+  List<Proveedor> listaProveedores = [];
+  List<Distribuidor> listaDistribuidores = [];
   bool isLoading = true;
   bool isSaving = false;
   //----------------------------------------------------------------------------
-  NotaCompraService() {
-    // loadCompras();
+  Service() {
+    loadCompras();
   }
 
   get convert => null;
@@ -81,4 +85,36 @@ class NotaCompraService extends ChangeNotifier {
     return listaProductos;
   }
 
+  Future<List<Cliente>> loadClientes() async {
+    isLoading = true;
+    notifyListeners();
+    final resp = await http.get(Uri.parse('$_baseUrl/cliente-api'));
+    final dataCliente = DataCliente.fromMap(json.decode(resp.body));
+    listaClientes = dataCliente.clientes;
+    isLoading = false;
+    notifyListeners();
+    return listaClientes;
+  }
+
+  Future<List<Proveedor>> loadProveedores() async {
+    isLoading = true;
+    notifyListeners();
+    final resp = await http.get(Uri.parse('$_baseUrl/proveedor-api'));
+    final dataProveedor = DataProveedor.fromMap(json.decode(resp.body));
+    listaProveedores = dataProveedor.proveedores;
+    isLoading = false;
+    notifyListeners();
+    return listaProveedores;
+  }
+
+  Future<List<Distribuidor>> loadDistribuidores() async {
+    isLoading = true;
+    notifyListeners();
+    final resp = await http.get(Uri.parse('$_baseUrl/distribuidor-api'));
+    final dataDistribuidor = DataDistribuidor.fromMap(json.decode(resp.body));
+    listaDistribuidores = dataDistribuidor.distribuidores;
+    isLoading = false;
+    notifyListeners();
+    return listaDistribuidores;
+  }
 }
