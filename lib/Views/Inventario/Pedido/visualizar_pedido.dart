@@ -6,10 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
 import 'package:sistema_mrp/Connection/api.dart';
 import 'package:sistema_mrp/Models/Cliente.dart';
+import 'package:sistema_mrp/Models/CompraDistribuicion/Distribuidora.dart';
 import 'package:sistema_mrp/Models/Inventario/DetallePedido.dart';
 import 'package:sistema_mrp/Models/Inventario/Pedido.dart';
-import 'package:sistema_mrp/Views/Inventario/show_pedido.dart';
-import 'package:sistema_mrp/Views/Inventario/visualizar_productos_pedido.dart';
+import 'package:sistema_mrp/Views/Inventario/Pedido/show_pedido.dart';
+import 'package:sistema_mrp/Views/Inventario/Pedido/visualizar_productos_pedido.dart';
 
 class VisualizarPedido extends StatefulWidget {
   final Pedido _pedido;
@@ -27,6 +28,7 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
   TextEditingController controllerFecha = TextEditingController();
   TextEditingController controllerHora = TextEditingController();
   late Future<List<Cliente>> _listClientes;
+  late Future<List<Distribuidora>> _listDistribuidoras;
 
   _update() async {
     var data = {
@@ -66,10 +68,33 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
     }
   }
 
+  Future<List<Distribuidora>> _getDistribuidoraPedido() async {
+    Uri url = Uri.parse('http://sistema-mrp.test/api/show/distribuidora-api/' +
+        widget._pedido.distribuidor_id);
+    final response = await http.get(url);
+    List<Distribuidora> data = [];
+    if (response.statusCode == 200) {
+      String body = utf8.decode(response.bodyBytes);
+      final jsonData = jsonDecode(body);
+      for (var item in jsonData) {
+        print(item["id"].toString());
+        print(item["nombre"]);
+        print(item["direccion"]);
+        data.add(Distribuidora(item["id"].toString(), item["nombre"],
+            item["direccion"], item["telefono"],item["email"],
+            item["tipo"],item["medio_transporte"],));
+      }
+      return data;
+    } else {
+      throw Exception("Falló la conexión");
+    }
+  }
+
   @override
   void initState() {
     Pedido p = widget._pedido;
     _listClientes = _getClientePedido();
+    _listDistribuidoras = _getDistribuidoraPedido();
     controllerCliente = TextEditingController(text: "Diego");
     controllerDistribuidor = TextEditingController(text: p.distribuidor_id);
     controllerEstado = TextEditingController(text: p.estado);
@@ -284,7 +309,7 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
       clientes.add(
         TextFormField(
           decoration: const InputDecoration(
-            labelText: "Cliente:",
+            labelText: "Cliente Prueba:",
           ),
           controller: controllerCliente,
           readOnly: true,

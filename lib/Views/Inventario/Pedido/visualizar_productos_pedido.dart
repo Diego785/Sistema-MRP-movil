@@ -7,6 +7,7 @@ import 'package:sistema_mrp/Models/Inventario/DetallePedido.dart';
 import 'package:http/http.dart' as http;
 import 'package:sistema_mrp/Models/Inventario/Producto.dart';
 import 'package:sistema_mrp/Models/Inventario/ProductoPedido.dart';
+import 'package:sistema_mrp/Views/Inventario/Pedido/visualizar_productos_pedido_detalle.dart';
 import 'package:sistema_mrp/Views/Inventario/show_materia_prima.dart';
 
 class VisualizarProductosPedido extends StatefulWidget {
@@ -18,44 +19,20 @@ class VisualizarProductosPedido extends StatefulWidget {
 }
 
 class _VisualizarProductosPedidoState extends State<VisualizarProductosPedido> {
-  late Future<List<DetallePedido>> _listDetallePedido;
-  List _detalles = [];
+  late Future<List<ProductoPedido>> _listProductoPedido; // AQUÍ TIENE QUE INSTANCIARSE COMO PRODUCTO2 PARA QUE TENGA LA MISMA CLASE QUE SUS DETALLES EN LA SIGUIENTE VIEW
+  
 
   @override
   void initState() {
-    _listDetallePedido = _getDetallesPedido();
+    _listProductoPedido = _getProductoPedido();
     super.initState();
   }
 
-  Future<List<DetallePedido>> _getDetallesPedido() async {
-    print(widget._detalle);
-    Uri url = Uri.parse(
-        'http://sistema-mrp.herokuapp.com/api/detalle-pedido-api/' + widget._detalle);
-    final response = await http.get(url);
-    List<DetallePedido> data = [];
-    if (response.statusCode == 200) {
-      String body = utf8.decode(response.bodyBytes);
-      final jsonData = jsonDecode(body);
-      for (var item in jsonData) { 
-        print(item["id"].toString());
-        print(item["estado"]);
-        data.add(DetallePedido(
-            item["id"].toString(),
-            item["pedido_id"].toString(),
-            item["producto_id"].toString(),
-            item["cantidad"].toString(),
-            item["estado"]));
-      }
-      return data;
-    } else {
-      throw Exception("Falló la conexión");
-    }
-  }
-
+ 
   Future<List<ProductoPedido>> _getProductoPedido() async {
     print(widget._detalle);
     Uri url = Uri.parse(
-        'http://sistema-mrp.test/api/producto-pedido-api/' + widget._detalle);
+        'http://sistema-mrp.test/api/detalle-pedido-api/' + widget._detalle);
     final response = await http.get(url);
     List<ProductoPedido> data = [];
     if (response.statusCode == 200) {
@@ -63,19 +40,12 @@ class _VisualizarProductosPedidoState extends State<VisualizarProductosPedido> {
       final jsonData = jsonDecode(body);
       for (var item in jsonData) { 
         print(item["id"].toString());
-        print(item["nombre"]);
+        print(item["producto"]);
         data.add(ProductoPedido(
             item["id"].toString(),
-            item["nombre"],
-            item["descripcion"],
-            item["color"],
-            item["tamano"],
+            item["producto"],
             item["estado"],
-            item["peso"],
-            item["especificacion"],
-            item["costoProduccion"],
-            item["cantidad"],
-            item["categoria_id"]));
+            item["cantidad"]));
       }
       return data;
     } else {
@@ -96,7 +66,7 @@ class _VisualizarProductosPedidoState extends State<VisualizarProductosPedido> {
 
   Widget getBody() {
     return FutureBuilder(
-      future: _listDetallePedido,
+      future: _listProductoPedido,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           return ListView(
@@ -131,7 +101,7 @@ class _VisualizarProductosPedidoState extends State<VisualizarProductosPedido> {
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
                 subtitle: Text(
-                  detalle.producto_id+ " - " + detalle.cantidad,
+                  detalle.producto+ " - " + detalle.cantidad,
                   style: TextStyle(
                       color: secondaryColor, fontStyle: FontStyle.italic),
                 ),
@@ -145,6 +115,16 @@ class _VisualizarProductosPedidoState extends State<VisualizarProductosPedido> {
                 ),
               ),
             ),
+            secondaryActions: <Widget>[
+              IconSlideAction(
+                caption: 'Visualizar',
+                color: Colors.indigoAccent,
+                icon: Icons.visibility,
+                onTap: (){
+                   Navigator.push(context, MaterialPageRoute(builder: (_) => VisualizarProductoPedido(detalle.id)));
+                },
+              ),
+            ],
           ),
         ),
       );

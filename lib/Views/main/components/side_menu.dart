@@ -102,8 +102,7 @@ class SideMenu extends StatelessWidget {
               onTap: () => Navigator.pushNamed(context, "/pedido"),
             ),
             const Divider(),
-<<<<<<< HEAD
-            ListTile(
+             ListTile(
               leading: Icon(Icons.person),
               title: const Text("Clientes"),
               onTap: () {},
@@ -121,15 +120,12 @@ class SideMenu extends StatelessWidget {
               onTap: () {},
             ),
             const Divider(),
-            
-=======
              ListTile(
             leading: Icon(Icons.upcoming),
               title: const Text("Nota de Compras"),
               onTap: () => Navigator.pushNamed(context, "/nota-compra"),
             ),
             const Divider(),
->>>>>>> b74ca7cc53a74ddd204f6f886fa89a499c497095
             /*  ListTile(
               leading: Icon(Icons.share),
               title: Text("Share"),
