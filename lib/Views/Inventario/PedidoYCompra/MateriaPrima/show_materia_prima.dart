@@ -44,7 +44,7 @@ class _ShowMateriaPrimaState extends State<ShowMateriaPrima> {
             item["peso"],
             item["color"],
             item["cantidad"],
-            item["categoria_materia"]));
+            item["idCategoriaMP"]));
       }
       return data;
     } else {
