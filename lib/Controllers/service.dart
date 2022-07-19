@@ -113,7 +113,7 @@ class Service extends ChangeNotifier {
   Future<List<Distribuidor>> loadDistribuidores() async {
     isLoading = true;
     notifyListeners();
-    final resp = await http.get(Uri.parse('$_baseUrl/distribuidor-api'));
+    final resp = await http.get(Uri.parse('$_baseUrl/distribuidora-api'));
     final dataDistribuidor = DataDistribuidor.fromMap(json.decode(resp.body));
     listaDistribuidores = dataDistribuidor.distribuidores;
     isLoading = false;
