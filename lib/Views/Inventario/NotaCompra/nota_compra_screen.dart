@@ -52,7 +52,7 @@ Widget getListCompras(NotaCompra notaCompra, BuildContext context) {
       style: const TextStyle(color: Colors.white, fontSize: 20),
     ),
     subtitle: Text(
-        'Fecha: ${notaCompra.fecha}    Costo: ${notaCompra.costoTotal}',
+        'Fecha: ${notaCompra.fecha}  \nHora: ${notaCompra.hora} \nCosto: ${notaCompra.costoTotal}',
         style: TextStyle(color: Colors.white.withOpacity(0.6))),
     leading: const Icon(
       Icons.event_note_outlined,
