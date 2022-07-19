@@ -8,3 +8,4 @@ export 'package:sistema_mrp/Models/prueba/invoice.dart';
 export 'package:sistema_mrp/Models/prueba/supplier.dart';
 export 'package:sistema_mrp/Models/Proveedor.dart';
 export 'package:sistema_mrp/Models/Distribuidor.dart';
+export 'package:sistema_mrp/Models/Maquinaria.dart';

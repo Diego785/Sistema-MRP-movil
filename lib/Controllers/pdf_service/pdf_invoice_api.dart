@@ -155,6 +155,11 @@ class PdfInvoiceApi {
           headers = Distribuidor.atributos; //7
         }
         break;
+      case 'maquinarias':
+        {
+          headers = Maquinaria.atributos; //7
+        }
+        break;
     }
 
     print(headers.length);

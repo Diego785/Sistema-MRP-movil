@@ -108,7 +108,15 @@ class _PdfPageScreenState extends State<PdfPageScreen> {
               const SizedBox(height: 5),
               ButtonWidget(
                 text: 'Maquinarias PDF',
-                onClicked: () async {},
+                onClicked: () async {
+                  service.loadMaquinarias();
+                  await Future.delayed(const Duration(seconds: 1));
+                  const key = 'maquinarias';
+                  final items = {key: service.listaMaquinarias};
+                  final res = getInvoice(items, key);
+                  final pdfFile = await PdfInvoiceApi.generate(res);
+                  PdfApi.openFile(pdfFile);
+                },
               ),
               const SizedBox(height: 5),
               ButtonWidget(

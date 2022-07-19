@@ -18,6 +18,7 @@ class Service extends ChangeNotifier {
   List<Cliente> listaClientes = [];
   List<Proveedor> listaProveedores = [];
   List<Distribuidor> listaDistribuidores = [];
+  List<Maquinaria> listaMaquinarias = [];
   bool isLoading = true;
   bool isSaving = false;
   //----------------------------------------------------------------------------
@@ -119,5 +120,15 @@ class Service extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
     return listaDistribuidores;
+  }
+  Future<List<Maquinaria>> loadMaquinarias() async {
+    isLoading = true;
+    notifyListeners();
+    final resp = await http.get(Uri.parse('$_baseUrl/maquinarias'));
+    final dataDistribuidor = DataMaquinaria.fromMap(json.decode(resp.body));
+    listaMaquinarias = dataDistribuidor.maquinarias;
+    isLoading = false;
+    notifyListeners();
+    return listaMaquinarias;
   }
 }
