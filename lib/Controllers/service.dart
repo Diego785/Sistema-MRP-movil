@@ -6,7 +6,10 @@ import 'package:sistema_mrp/Models/models.dart';
 
 class Service extends ChangeNotifier {
   final String _baseUrl =
-      'http://192.168.1.2:8000/Sistema-MRP/public/api'; //?included=detalle_compras';
+      // 'http://192.168.1.2:8000/Sistema-MRP/public/api'; //?included=detalle_compras';
+      'http://sistema-mrp.herokuapp.com/api'; //?included=detalle_compras';
+
+
   final List<NotaCompra> listaCompras = [];
   late NotaCompra selectedCompra;
   List<MateriaPrima1> listaMateria = [];
