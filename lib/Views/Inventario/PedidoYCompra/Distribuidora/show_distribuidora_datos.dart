@@ -47,7 +47,7 @@ class _ShowDistribuidoraDatosState extends State<ShowDistribuidoraDatos> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detalles de la Distribuidora" + widget._distribuidora.id),
+        title: Text("Detalles de la Distribuidora" + widget._distribuidora.nombre),
         backgroundColor: Colors.green.shade800,
       ),
       body: ListView(
@@ -102,8 +102,8 @@ class _ShowDistribuidoraDatosState extends State<ShowDistribuidoraDatos> {
                               controller: controllerEmail,
                               readOnly: true,
                               enabled: false,
-                            ),
-                            TextFormField(
+                            )
+                            ,TextFormField(
                               decoration: const InputDecoration(
                                 labelText: "Tipo:",
                               ),

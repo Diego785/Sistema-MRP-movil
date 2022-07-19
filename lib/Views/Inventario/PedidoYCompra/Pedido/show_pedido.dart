@@ -73,24 +73,6 @@ Future<List<Pedido>> _getPedidos() async {
         backgroundColor: Colors.green.shade800,
       ),
       body: getBody(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.green.shade700,
-        onPressed: () {
-          /*Navigator.push(
-                  context, MaterialPageRoute(builder: (_) => RegisterBus()))
-              .then((newBus) {
-            if (newBus != null) {
-              setState(() {
-                buses.add(newBus);
-                messageResponse(
-                    context, newBus.codigo.toString() + " has been saved!");
-              });
-            }
-          });*/
-        },
-        tooltip: "Agregar Pedido",
-        child: Icon(Icons.add),
-      ),
     );
   }
 

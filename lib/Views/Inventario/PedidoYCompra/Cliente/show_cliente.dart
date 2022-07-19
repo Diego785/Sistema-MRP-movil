@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:sistema_mrp/Complements/loading_page.dart';
 import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
 import 'package:sistema_mrp/Models/CompraDistribuicion/Cliente.dart';
-import 'package:sistema_mrp/Models/CompraDistribuicion/Cliente2.dart';
 import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Cliente/create-cliente.dart';
 import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Cliente/edit_cliente.dart';
 import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Cliente/show_cliente_datos.dart';
@@ -19,14 +18,14 @@ class ShowCliente extends StatefulWidget {
 }
 
 class _ShowClienteState extends State<ShowCliente> {
-  late Future<List<Cliente2>> _listClientes;
+  late Future<List<Cliente>> _listClientes;
 
-  Future<List<Cliente2>> _getClientes() async {
+  Future<List<Cliente>> _getClientes() async {
     Uri url =
         //Uri.parse('http://localhost/Sistema-MRP/public/api/cliente-api');
         Uri.parse('http://sistema-mrp.herokuapp.com/api/cliente-api2');
     final response = await http.get(url);
-    List<Cliente2> data = [];
+    List<Cliente> data = [];
     if (response.statusCode == 200) {
       String body = utf8.decode(response.bodyBytes);
       final jsonData = jsonDecode(body);
@@ -35,7 +34,7 @@ class _ShowClienteState extends State<ShowCliente> {
         print(item["nombre"]);
         print(item["telefono"]);
         print(item["direccion"]);
-        data.add(Cliente2(
+        data.add(Cliente(
             item["id"], item["nombre"], item["telefono"], item["direccion"]));
       }
       return data;
@@ -136,20 +135,20 @@ class _ShowClienteState extends State<ShowCliente> {
                 color: Colors.indigoAccent,
                 icon: Icons.visibility,
                 onTap: () {
-                 /* Navigator.push(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (_) => ShowClienteDatos(cliente)));
-                */},
+                },
               ),
               IconSlideAction(
                 caption: 'Editar',
                 color: Colors.orangeAccent,
                 icon: Icons.edit,
                 onTap: () {
-                  /*Navigator.push(context,
+                  Navigator.push(context,
                       MaterialPageRoute(builder: (_) => EditCliente(cliente)));
-                */},
+                },
               ),
             ],
           ),
@@ -159,7 +158,7 @@ class _ShowClienteState extends State<ShowCliente> {
     return clientes;
   }
 
-  _deleteCliente(context, Cliente2 cliente) {
+  _deleteCliente(context, Cliente cliente) {
     showDialog(
         context: context,
         builder: (dialogContext) => AlertDialog(

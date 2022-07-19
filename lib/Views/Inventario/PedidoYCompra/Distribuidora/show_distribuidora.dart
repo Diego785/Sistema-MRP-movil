@@ -41,7 +41,7 @@ class _ShowDistribuidoraState extends State<ShowDistribuidora> {
             item["direccion"],
             item["telefono"],
             item["email"],
-            item["telefono"],
+            item["tipo"],
             item["medio_transporte"]));
       }
       return data;

@@ -187,7 +187,7 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
                                       style: ElevatedButton.styleFrom(
                                         primary: Colors.green.shade800,
                                         padding: const EdgeInsets.symmetric(
-                                            horizontal: 90, vertical: 20),
+                                            horizontal: 85, vertical: 20),
                                         textStyle: const TextStyle(
                                           fontSize: 15,
                                           fontWeight: FontWeight.bold,
@@ -220,7 +220,7 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
                                 style: ElevatedButton.styleFrom(
                                   primary: Colors.blue.shade800,
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 90, vertical: 20),
+                                      horizontal: 85, vertical: 20),
                                   textStyle: const TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
