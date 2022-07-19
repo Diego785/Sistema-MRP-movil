@@ -63,8 +63,6 @@ class MyApp extends StatelessWidget {
                 );
               case '/materia-prima':
                 return ShowMateriaPrima();
-              case '/producto':                
-                return  ProductoScreen();
               case '/pedido':
                 return ShowPedido();
               case '/nota-compra':
@@ -83,6 +81,7 @@ class MyApp extends StatelessWidget {
       //esto es para mandar variables por las rutas
       routes: {
         '/producto-show':(_) => const ProductoShowScreen(),
+        '/producto':(_) =>  ProductoScreen(),
       },
     );
   }

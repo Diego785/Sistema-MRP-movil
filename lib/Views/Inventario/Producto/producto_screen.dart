@@ -82,10 +82,10 @@ class _ProductoScreenState extends State<ProductoScreen> {
                   style: const TextStyle(
                     color: Colors.white,
                   )),
-              subtitle: Text(product.descripcion,
-                  style: const TextStyle(
-                    color: Colors.white,
-                  )),
+              // subtitle: Text(product.descripcion,
+              //     style: const TextStyle(
+              //       color: Colors.white,
+              //     )),
               leading: CircleAvatar(
                 backgroundColor: const Color.fromARGB(255, 36, 53, 37),
                 child: Text('${product.id}',
@@ -107,12 +107,12 @@ class _ProductoScreenState extends State<ProductoScreen> {
                     arguments: product);
               },
             ),
-            IconSlideAction(
-              caption: 'Delete',
-              color: Colors.red,
-              icon: Icons.delete,
-              onTap: () {},
-            ),
+            // IconSlideAction(
+            //   caption: 'Delete',
+            //   color: Colors.red,
+            //   icon: Icons.delete,
+            //   onTap: () {},
+            // ),
           ],
         ),
       );
@@ -121,9 +121,9 @@ class _ProductoScreenState extends State<ProductoScreen> {
   //conexion ala al servicio api -> return lista de productos
   Future<List<Producto>> cargarProductos() async {
     var response = await http
-        // .get(Uri.parse('http://193.123.119.53/public/api/productos'));
-        .get(Uri.parse(
-            'http://192.168.1.2:8000/Sistema-MRP/public/api/productos'));
+        .get(Uri.parse('http://sistema-mrp.herokuapp.com/api/productos'));
+        // .get(Uri.parse(
+        //     'http://192.168.1.2:8000/Sistema-MRP/public/api/productos'));
     final dataProducto =
         DataProducto.fromMap(convert.jsonDecode(response.body));
     return dataProducto.productos;

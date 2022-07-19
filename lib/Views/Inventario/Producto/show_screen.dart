@@ -20,15 +20,34 @@ class _ProductoShowScreenState extends State<ProductoShowScreen> {
     // ModalRoute.of(context)!.settings.arguments as Producto;
     if (product == null) {
       print("falta producto");
-      return Text("nullTx");
+      return Text("Error");
     } else {
       return Scaffold(
         appBar: AppBar(
-          title: Text('Nombre del producto: ${product.nombre}'),
+          title: Text('Producto: ${product.nombre}'),
           backgroundColor: Colors.green.shade800,
-          actions: [IconButton(icon: Icon(Icons.replay), onPressed: () {})],
+          actions: [IconButton(icon: const Icon(Icons.replay), onPressed: () {})],
         ),
-        body: datos1(product),
+        body: ListView(
+        children: [
+          Transform.translate(
+            offset: const Offset(0, -90),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 35, vertical: 120),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: cargar(product),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+        // body: datos1(product),
         // ListView(
         //   children: [
         //     // datos(product),
@@ -145,6 +164,107 @@ class _ProductoShowScreenState extends State<ProductoShowScreen> {
         ),
       ],
     );
+  }
+  
+  List<Widget> cargar (Producto product) {
+    List<Widget> lista = [];
+
+      Widget nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "codigo:",
+        ),
+        controller: TextEditingController(text: '${product.id}'),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+
+      nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "Nombre:",
+        ),
+        controller: TextEditingController(text: product.nombre),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+
+      nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "descripcion:",
+        ),
+        controller: TextEditingController(text: product.descripcion),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+
+      nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "color:",
+        ),
+        controller: TextEditingController(text: product.color),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+
+      nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "tamaño:",
+        ),
+        controller: TextEditingController(text: product.tamano),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+      nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "estado:",
+        ),
+        controller: TextEditingController(text: product.estado),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+      nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "peso:",
+        ),
+        controller: TextEditingController(text: product.peso),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+      nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "especificacion:",
+        ),
+        controller: TextEditingController(text: product.especificacion),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+      nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "costo:",
+        ),
+        controller: TextEditingController(text: product.costoProduccion),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+      nise = TextFormField(
+        decoration: const InputDecoration(
+          labelText: "cantidad:",
+        ),
+        controller: TextEditingController(text: product.cantidad),
+        readOnly: true,
+        enabled: false,
+      );
+      lista.add(nise);
+    return lista;
+  
   }
 }
 // cargarDataTable(int id) {}
