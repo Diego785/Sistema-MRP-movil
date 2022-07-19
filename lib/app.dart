@@ -5,8 +5,8 @@ import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
 import 'package:sistema_mrp/Controllers/Dashboard/MenuController.dart';
 import 'package:sistema_mrp/Controllers/Login/auth.dart';
 import 'package:sistema_mrp/Views/Inventario/NotaCompra/detalle_compra_screen.dart';
-import 'package:sistema_mrp/Views/Inventario/Pedido/show_pedido.dart';
-import 'package:sistema_mrp/Views/Inventario/Pedido/visualizar_pedido.dart';
+import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Pedido/show_pedido.dart';
+import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Pedido/visualizar_pedido.dart';
 import 'package:sistema_mrp/Views/main/main_screen.dart';
 import 'package:sistema_mrp/Views/views.dart';
 

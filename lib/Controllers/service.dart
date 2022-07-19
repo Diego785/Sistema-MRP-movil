@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:sistema_mrp/Models/Cliente.dart';
+import 'package:sistema_mrp/Models/CompraDistribuicion/Cliente.dart';
 import 'dart:convert';
 import 'package:sistema_mrp/Models/models.dart';
 

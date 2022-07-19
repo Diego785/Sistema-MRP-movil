@@ -4,13 +4,14 @@ import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
 import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
+import 'package:sistema_mrp/Complements/loading_page.dart';
 import 'package:sistema_mrp/Connection/api.dart';
-import 'package:sistema_mrp/Models/Cliente.dart';
+import 'package:sistema_mrp/Models/CompraDistribuicion/Cliente.dart';
 import 'package:sistema_mrp/Models/CompraDistribuicion/Distribuidora.dart';
 import 'package:sistema_mrp/Models/Inventario/DetallePedido.dart';
 import 'package:sistema_mrp/Models/Inventario/Pedido.dart';
-import 'package:sistema_mrp/Views/Inventario/Pedido/show_pedido.dart';
-import 'package:sistema_mrp/Views/Inventario/Pedido/visualizar_productos_pedido.dart';
+import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Pedido/show_pedido.dart';
+import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Pedido/visualizar_productos_pedido.dart';
 
 class VisualizarPedido extends StatefulWidget {
   final Pedido _pedido;
@@ -48,7 +49,7 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
   }
 
   Future<List<Cliente>> _getClientePedido() async {
-    Uri url = Uri.parse('http://sistema-mrp.test/api/show/cliente-api/' +
+    Uri url = Uri.parse('http://sistema-mrp.herokuapp.com/api/show/cliente-api/' +
         widget._pedido.cliente_id);
     final response = await http.get(url);
     List<Cliente> data = [];
@@ -69,7 +70,7 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
   }
 
   Future<List<Distribuidora>> _getDistribuidoraPedido() async {
-    Uri url = Uri.parse('http://sistema-mrp.test/api/show/distribuidora-api/' +
+    Uri url = Uri.parse('http://sistema-mrp.herokuapp.com/api/show/distribuidora-api/' +
         widget._pedido.distribuidor_id);
     final response = await http.get(url);
     List<Distribuidora> data = [];
@@ -109,7 +110,7 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Visualizar pedido"),
+        title: Text("Detalles del Pedido " + widget._pedido.id),
         backgroundColor: Colors.green.shade800,
       ),
       body: FutureBuilder(
@@ -130,14 +131,6 @@ class _VisualizarPedidoState extends State<VisualizarPedido> {
                           children: <Widget>[
                             Column(
                               children: _list(context, snapshot.data),
-                            ),
-                            TextFormField(
-                              decoration: const InputDecoration(
-                                labelText: "Distribuidor:",
-                              ),
-                              controller: controllerDistribuidor,
-                              readOnly: true,
-                              enabled: false,
                             ),
                             TextFormField(
                               decoration: const InputDecoration(

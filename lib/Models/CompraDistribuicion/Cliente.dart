@@ -23,11 +23,8 @@ class Cliente {
   String telefono = "";
   String direccion = "";
 
-  Cliente(id, nombre, telefono, direccion) {
+  Cliente(id, this.nombre, this.telefono, this.direccion) {
     this.id = id.toString();
-    this.nombre = nombre;
-    this.telefono = telefono;
-    this.direccion = direccion;
   }
 
   static List<String> atributos = [

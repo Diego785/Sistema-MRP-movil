@@ -7,16 +7,12 @@ class MateriaPrima {
   String tamano = "";
   String peso = "";
   String color = "";
-  String? idCategoriaMP = "";
+  String cantidad = "";
+  String categoria_materia = "";
 
-  MateriaPrima(id, nombre, tipo, descripcion, tamano, peso, color, idCategoriaMP) {
+  MateriaPrima(id, this.nombre, this.tipo, this.descripcion, this.tamano, this.peso, this.color, cantidad, categoria_materia) {
     this.id = id.toString();
-    this.nombre = nombre;
-    this.tipo = tipo;
-    this.descripcion = descripcion;
-    this.tamano = tamano;
-    this.peso = peso;
-    this.color = color;
-    this.idCategoriaMP = idCategoriaMP.toString();
+    this.cantidad = cantidad.toString();
+    this.categoria_materia = categoria_materia.toString();
   }
 }

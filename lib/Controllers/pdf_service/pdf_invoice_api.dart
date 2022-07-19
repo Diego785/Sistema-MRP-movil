@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:sistema_mrp/Controllers/services.dart';
-import 'package:sistema_mrp/Models/Cliente.dart';
+import 'package:sistema_mrp/Models/CompraDistribuicion/Cliente.dart';
 import 'package:sistema_mrp/Models/models.dart';
 import 'package:sistema_mrp/utils.dart';
 import 'package:pdf/pdf.dart';

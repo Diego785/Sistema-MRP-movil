@@ -3,10 +3,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:sistema_mrp/Complements/loading_page.dart';
 import 'package:sistema_mrp/Models/Inventario/Pedido.dart';
 import 'package:sistema_mrp/Models/Inventario/Producto.dart';
 import 'package:sistema_mrp/Models/Inventario/Producto2.dart';
-import 'package:sistema_mrp/Views/Inventario/Pedido/show_pedido.dart';
+import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Pedido/show_pedido.dart';
 
 class VisualizarProductoPedido extends StatefulWidget {
   String _producto;
@@ -33,7 +34,7 @@ class _VisualizarProductoPedidoState extends State<VisualizarProductoPedido> {
 
   Future<List<Producto2>> _getProductoPedido() async {
     Uri url = Uri.parse(
-        'http://sistema-mrp.test/api/producto-detalle-pedido-api/' +
+        'http://sistema-mrp.herokuapp.com/api/producto-detalle-pedido-api/' +
             widget._producto);
     final response = await http.get(url);
     List<Producto2> data = [];
@@ -73,7 +74,7 @@ class _VisualizarProductoPedidoState extends State<VisualizarProductoPedido> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Detalles del producto " + widget._producto),
+        title: Text("Producto " + widget._producto),
         backgroundColor: Colors.green.shade800,
       ),
       body: FutureBuilder(

@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:sistema_mrp/Complements/Dashboard/constants.dart';
+import 'package:sistema_mrp/Complements/loading_page.dart';
 import 'package:sistema_mrp/Models/Inventario/DetallePedido.dart';
 import 'package:http/http.dart' as http;
 import 'package:sistema_mrp/Models/Inventario/Producto.dart';
 import 'package:sistema_mrp/Models/Inventario/ProductoPedido.dart';
-import 'package:sistema_mrp/Views/Inventario/Pedido/visualizar_productos_pedido_detalle.dart';
-import 'package:sistema_mrp/Views/Inventario/show_materia_prima.dart';
+import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Pedido/visualizar_productos_pedido_detalle.dart';
 
 class VisualizarProductosPedido extends StatefulWidget {
   String _detalle = "";
@@ -19,7 +19,7 @@ class VisualizarProductosPedido extends StatefulWidget {
 }
 
 class _VisualizarProductosPedidoState extends State<VisualizarProductosPedido> {
-  late Future<List<ProductoPedido>> _listProductoPedido; // AQUÍ TIENE QUE INSTANCIARSE COMO PRODUCTO2 PARA QUE TENGA LA MISMA CLASE QUE SUS DETALLES EN LA SIGUIENTE VIEW
+  late Future<List<ProductoPedido>> _listProductoPedido;
   
 
   @override
@@ -32,7 +32,7 @@ class _VisualizarProductosPedidoState extends State<VisualizarProductosPedido> {
   Future<List<ProductoPedido>> _getProductoPedido() async {
     print(widget._detalle);
     Uri url = Uri.parse(
-        'http://sistema-mrp.test/api/detalle-pedido-api/' + widget._detalle);
+        'http://sistema-mrp.herokuapp.com/api/detalle-pedido-api/' + widget._detalle);
     final response = await http.get(url);
     List<ProductoPedido> data = [];
     if (response.statusCode == 200) {

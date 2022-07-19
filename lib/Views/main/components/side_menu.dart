@@ -1,6 +1,9 @@
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Cliente/show_cliente.dart';
+import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Distribuidora/show_distribuidora.dart';
+import 'package:sistema_mrp/Views/Inventario/PedidoYCompra/Proveedor/show_proveedor.dart';
 import 'package:sistema_mrp/Views/Login/login.dart';
 import 'package:sistema_mrp/Views/Dashboard/welcome.dart';
 import 'package:sistema_mrp/Controllers/Login/auth.dart';
@@ -16,9 +19,9 @@ class SideMenu extends StatelessWidget {
       if (!auth.authenticated) {
         return ListView(
           children: [
-            UserAccountsDrawerHeader(
-              accountName: Text("User"),
-              accountEmail: Text("Loguearse para ver más."),
+           const UserAccountsDrawerHeader(
+              accountName:  Text("User"),
+              accountEmail:  Text("Loguearse para ver más."),
               currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 backgroundImage: AssetImage("assets/images/user.jpg",),
@@ -41,8 +44,8 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.login),
-              title: Text("Login"),
+              leading: const Icon(Icons.login),
+              title: const Text("Login"),
               onTap: () {
                 Navigator.of(context)
                     .push(MaterialPageRoute(builder: (context) => LoginPage()));
@@ -69,7 +72,7 @@ class SideMenu extends StatelessWidget {
                   ),
                 ),*/
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: NetworkImage(
                       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBY6oRxyC_aIOuQgILXG0P3qlK6cH3x2AuFsHsXKMhWT19C0hpO5etVaMOUrjQkaTeO3Y&usqp=CAU"),
@@ -78,8 +81,8 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             ListTile(
-              leading: Icon(Icons.dashboard),
-              title: Text("Inicio"),
+              leading: const Icon(Icons.dashboard),
+              title: const Text("Inicio"),
               onTap: () => Navigator.pushNamed(context, "/main-screen"),
             ),
             const Divider(),
@@ -105,19 +108,19 @@ class SideMenu extends StatelessWidget {
              ListTile(
               leading: Icon(Icons.person),
               title: const Text("Clientes"),
-              onTap: () {},
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ShowCliente())),
             ),
             const Divider(),
             ListTile(
               leading: Icon(Icons.arrow_downward),
               title: const Text("Proveedores"),
-              onTap: () {},
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ShowProveedor())),
             ),
             const Divider(),
             ListTile(
               leading: Icon(Icons.arrow_upward),
               title: const Text("Distribuidores"),
-              onTap: () {},
+              onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ShowDistribuidora())),
             ),
             const Divider(),
              ListTile(
